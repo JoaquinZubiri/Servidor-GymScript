@@ -1,0 +1,26 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+article {
+  width: 300px;
+  height: 420px;
+  border: 1px solid #000;
+  margin: 30px;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 5px 5px 5px #888;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+img {
+  width: 120px;
+  height: auto;
+}

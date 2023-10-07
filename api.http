@@ -1,0 +1,30 @@
+### Recuperar todas las peliculas
+GET http://localhost:1234/movies
+
+### Recuperar una pelicula por id=1
+GET http://localhost:1234/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+
+### Recuperar una pelicula por genero(el genero se toma como un parametro de busqueda dentro de la entidad pelicula)
+GET http://localhost:1234/movies?genre=Action
+
+### Crear una pelicula con POST
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "title": "The Godfather",
+    "year": 1972,
+    "director": "Francis Ford Coppola",
+    "duration": 175,
+    "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+    "genre": ["Crime", "Drama"],
+    "rate": 9.2
+}
+
+### Actualizar año a una pelicula con PATCH
+PATCH http://localhost:1234/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+Content-Type: application/json
+
+{
+    "year": 1992
+}
