@@ -1,4 +1,4 @@
-const z = require("zod"); //libreria para validar el body de la req
+import z from "zod"; //libreria para validar el body de la req
 
 const movieSchema = z.object({
   title: z.string({
@@ -23,14 +23,12 @@ const movieSchema = z.object({
   ),
 });
 
-function validateMovie(object) {
+export function validateMovie(object) {
   //El safeParse devuelve un booleano para ver si es valido o no
   return movieSchema.safeParse(object);
 }
 
-function validateParcialMovie(object) {
+export function validateParcialMovie(object) {
   //El partial valida toma todos lo campos como opcional y valida los que viene en el objeto
   return movieSchema.partial().safeParse(object);
 }
-
-module.exports = { validateMovie, validateParcialMovie };
