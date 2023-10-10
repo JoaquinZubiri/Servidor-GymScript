@@ -5,10 +5,10 @@ export const productoRouter = Router();
 
 productoRouter.get("/", productoController.getAll);
 
-// productoRouter.get("/:id", productoController.getById);
+productoRouter.get("/:id", productoController.getById);
 
-// productoRouter.post("/", productoController.create);
+productoRouter.post("/", productoController.create);
 
-// productoRouter.patch("/:id", productoController.update);
+productoRouter.patch("/:id", productoController.update);
 
-// productoRouter.delete("/:id", productoController.delete);
+productoRouter.delete("/:id", productoController.delete);

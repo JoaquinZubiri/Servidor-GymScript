@@ -4,10 +4,10 @@ const usuarioSchema = z.object({
   dni: z.number().int().positive().min(1).max(100000000),
   nombre: z.string(),
   apellido: z.string(),
-  telefono: z.number().int().positive(),
+  telefono: z.number().int().positive().optional(),
   mail: z.string(),
   contraseña: z.string(),
-  rol: z.string(),
+  rol: z.enum(["admin", "user", "recepcionista"]),
 });
 
 export function validateUsuario(object) {

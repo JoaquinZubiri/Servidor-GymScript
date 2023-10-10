@@ -10,13 +10,13 @@ POST http://localhost:1234/usuarios
 Content-Type: application/json
 
 {
-    "dni": 44555666,
-    "nombre": "Juan",
-    "apellido": "Perez",
-    "telefono": 12345678,
-    "mail": "juanperez@gmail.com",
-    "contraseña": "contrasena123",
-    "rol": "user",
+    "dni": 11222333,
+    "nombre": "Rodrigo",
+    "apellido": "Gimenez",
+    "telefono": 99999999,
+    "mail": "mail@gmail.com",
+    "contraseña": "contr987",
+    "rol": "user"
 }
 
 ### Actualizar algo a un usuario con PATCH
@@ -28,4 +28,22 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario con DELETE  
-DELETE http://localhost:1234/usuario/1
+DELETE http://localhost:1234/usuarios/7
+
+
+### Recuperar todos los productos
+GET http://localhost:1234/productos
+
+### Recuperar un producto por id
+GET http://localhost:1234/productos/1
+
+### Crear un producto con POST
+POST http://localhost:1234/productos
+Content-Type: application/json
+
+{
+    "nombre": "RedBull",
+    "descripcion": "Bebida energetica",
+    "tipo": "Bebida",
+    "img": "https://images.ctfassets.net/lcr8qbvxj7mh/eyz1nHwgaDd9TKO6jslKD/1964dc02d78dc20fe267d864d5fabe14/DRES_AR_ED-250ml_cold_closed_front_redbullcom.png"
+}

@@ -1,18 +1,25 @@
-import mysql from "mysql2/promise";
+import db from "../db/connection.js";
+import { DataTypes } from "sequelize";
 
-const DEFAULT_CONFIG = {
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "root",
-  database: "gimnasio",
-};
-
-const connection = await mysql.createConnection(DEFAULT_CONFIG);
-
-export class productoModel {
-  static async getAll() {
-    const result = await connection.query("SELECT * FROM producto;");
-    return result[0];
-  }
-}
+export const productoModel = db.define(
+  "producto",
+  {
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    descripcion: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    tipo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    img: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+  },
+  { freezeTableName: true, timestamps: false }
+);

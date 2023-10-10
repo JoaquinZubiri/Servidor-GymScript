@@ -5,12 +5,12 @@ export const usuarioRouter = Router();
 
 usuarioRouter.get("/", usuarioController.getAll);
 
+usuarioRouter.get("/:id", usuarioController.getById);
+
 usuarioRouter.post("/", usuarioController.create);
 
 usuarioRouter.post("/loginUser", usuarioController.loginUser);
 
-// usuarioRouter.get("/:id", usuarioController.getById);
+usuarioRouter.patch("/:id", usuarioController.update);
 
-// usuarioRouter.patch("/:id", usuarioController.update);
-
-// usuarioRouter.delete("/:id", usuarioController.delete);
+usuarioRouter.delete("/:id", usuarioController.delete);
