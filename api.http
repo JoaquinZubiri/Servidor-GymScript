@@ -6,21 +6,21 @@ GET http://localhost:1234/usuarios
 ### Recuperar un usuario por email
 
 ### Crear un usuario con POST
-POST http://localhost:1234/usuario
+POST http://localhost:1234/usuarios
 Content-Type: application/json
 
 {
     "dni": 44555666,
     "nombre": "Juan",
     "apellido": "Perez",
-    "telefono": "12345678",
-    "email": "juanperez@gmail.com",
-    "contraseña": "contraseña123",
+    "telefono": 12345678,
+    "mail": "juanperez@gmail.com",
+    "contraseña": "contrasena123",
     "rol": "user",
 }
 
 ### Actualizar algo a un usuario con PATCH
-PATCH http://localhost:1234/usuario/id
+PATCH http://localhost:1234/usuarios/1
 Content-Type: application/json
 
 {
@@ -28,4 +28,4 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario con DELETE  
-DELETE http://localhost:1234/usuario/id
+DELETE http://localhost:1234/usuario/1

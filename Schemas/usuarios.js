@@ -5,9 +5,9 @@ const usuarioSchema = z.object({
   nombre: z.string(),
   apellido: z.string(),
   telefono: z.number().int().positive(),
-  email: z.string().email(),
+  mail: z.string(),
   contraseña: z.string(),
-  rol: z.array(z.enum(["Admin", "User", "Recepcionista"])),
+  rol: z.string(),
 });
 
 export function validateUsuario(object) {
