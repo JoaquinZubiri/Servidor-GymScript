@@ -14,6 +14,10 @@ const PORT = process.env.PORT ?? 1234;
 app.use("/usuarios", usuarioRouter);
 app.use("/productos", productoRouter);
 
+app.use((_, res) => {
+  res.status(404).json({ error: "Recurso no encontrado" });
+});
+
 app.listen(PORT, () => {
   console.log("Servidor escuchando en http://localhost:" + PORT);
 });
