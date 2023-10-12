@@ -49,6 +49,9 @@ export class usuarioController {
   }
 
   static async create(req, res) {
+    if (!req.body.rol) {
+      req.body.rol = "user";
+    }
     const result = validateUsuario(req.body);
     if (result.error) {
       res
@@ -114,18 +117,21 @@ export class usuarioController {
     }
   }
 
-  //Cambiar mensaje error de manera generica(El mail o la contraseña no son correctos)
   static async loginUser(req, res) {
     const result = validateParcialUsuario(req.body);
     const { mail, contraseña } = result.data;
     try {
       const usuario = await usuarioModel.findOne({ where: { mail } });
       if (!usuario) {
-        res.status(400).json({ msg: "El mail no esta registrado" });
+        res
+          .status(400)
+          .json({ msg: "El mail o la contraseña no son correctos" });
       } else {
         const match = await bcrypt.compare(contraseña, usuario.contraseña);
         if (!match) {
-          res.status(400).json({ msg: "Contraseña incorrecta" });
+          res
+            .status(400)
+            .json({ msg: "El mail o la contraseña no son correctos" });
         } else {
           const token = jwt.sign(
             {
