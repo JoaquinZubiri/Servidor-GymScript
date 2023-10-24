@@ -2,6 +2,8 @@ import express, { json } from "express";
 import cors from "cors";
 import { usuarioRouter } from "./routes/usuario.js";
 import { productoRouter } from "./routes/producto.js";
+import { provinciaRouter } from "./routes/provincia.js";
+import { localidadRouter } from "./routes/localidad.js";
 // import "dotenv/config.js";
 
 const app = express();
@@ -13,6 +15,8 @@ const PORT = process.env.PORT ?? 1234;
 
 app.use("/usuarios", usuarioRouter);
 app.use("/productos", productoRouter);
+app.use("/provincias", provinciaRouter);
+app.use("/localidades", localidadRouter);
 
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });
