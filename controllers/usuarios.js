@@ -16,8 +16,9 @@ export class usuarioController {
         const usuario = await usuarioModel.findOne({ where: { mail } });
         if (!usuario) {
           res.status(404).json({ msg: "No existe usuario con este mail" });
+        } else {
+          res.json(usuario);
         }
-        res.json(usuario);
       } catch (error) {
         res.status(500).json({
           msg: "Ocurrio un error a la hora de obtener el usuario",
@@ -27,10 +28,11 @@ export class usuarioController {
     }
     try {
       const usuario = await usuarioModel.findAll();
-      if (!usuario) {
-        res.status(404).json({ msg: "No existe el usuario" });
+      if (usuario.length === 0) {
+        res.status(404).json({ msg: "No existen usuarios" });
+      } else {
+        res.json(usuario);
       }
-      res.json(usuario);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de obtener los usuarios",
@@ -44,8 +46,9 @@ export class usuarioController {
       const usuario = await usuarioModel.findByPk(req.params.id);
       if (!usuario) {
         res.status(404).json({ msg: "No existe el usuario" });
+      } else {
+        res.json(usuario);
       }
-      res.json(usuario);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de obtener el usuario",
@@ -64,16 +67,17 @@ export class usuarioController {
         res
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
-      }
-      result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
-      const usuario = await usuarioModel.findOne({
-        where: { mail: result.data.mail },
-      });
-      if (usuario) {
-        res.status(400).json({ msg: "El mail ya esta registrado" });
       } else {
-        const newUsuario = await usuarioModel.create(result.data);
-        res.json(newUsuario).status(201);
+        result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
+        const usuario = await usuarioModel.findOne({
+          where: { mail: result.data.mail },
+        });
+        if (usuario) {
+          res.status(400).json({ msg: "El mail ya esta registrado" });
+        } else {
+          const newUsuario = await usuarioModel.create(result.data);
+          res.json(newUsuario).status(201);
+        }
       }
     } catch (error) {
       res.status(500).json({
@@ -90,15 +94,17 @@ export class usuarioController {
         res
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
+      } else {
+        const usuario = await usuarioModel.findByPk(req.params.id);
+        if (!usuario) {
+          res.status(404).json({ msg: "No existe el usuario a actualizar" });
+        } else {
+          await usuarioModel.update(result.data, {
+            where: { id: req.params.id },
+          });
+          res.json({ msg: "Usuario actualizado" }).status(200);
+        }
       }
-      await usuarioModel.update(result.data, {
-        where: { id: req.params.id },
-      });
-      res
-        .json({
-          msg: "Usuario actualizado",
-        })
-        .status(200);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de actualizar el usuario",
@@ -112,9 +118,10 @@ export class usuarioController {
       const usuario = await usuarioModel.findByPk(req.params.id);
       if (!usuario) {
         res.status(404).json({ msg: "No existe el usuario" });
+      } else {
+        await usuario.destroy();
+        res.json({ msg: "Usuario eliminado" }).status(200);
       }
-      await usuario.destroy();
-      res.json({ msg: "Usuario eliminado" }).status(200);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de eliminar el usuario",

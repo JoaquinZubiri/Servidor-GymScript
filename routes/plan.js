@@ -9,6 +9,6 @@ planRouter.get("/:id", planController.getById);
 
 planRouter.post("/", planController.create);
 
-planRouter.put("/:id", planController.update);
+planRouter.patch("/:id", planController.update);
 
 planRouter.delete("/:id", planController.delete);
