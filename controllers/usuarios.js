@@ -14,6 +14,9 @@ export class usuarioController {
     if (mail) {
       try {
         const usuario = await usuarioModel.findOne({ where: { mail } });
+        if (!usuario) {
+          res.status(404).json({ msg: "No existe usuario con este mail" });
+        }
         res.json(usuario);
       } catch (error) {
         res.status(500).json({
@@ -24,6 +27,9 @@ export class usuarioController {
     }
     try {
       const usuario = await usuarioModel.findAll();
+      if (!usuario) {
+        res.status(404).json({ msg: "No existe el usuario" });
+      }
       res.json(usuario);
     } catch (error) {
       res.status(500).json({
@@ -52,15 +58,14 @@ export class usuarioController {
     if (!req.body.rol) {
       req.body.rol = "user";
     }
-    const result = validateUsuario(req.body);
-    if (result.error) {
-      res
-        .status(400)
-        .json({ msg: "Error ingreso de datos", error: result.error.errors });
-    }
-    result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
-
     try {
+      const result = validateUsuario(req.body);
+      if (result.error) {
+        res
+          .status(400)
+          .json({ msg: "Error ingreso de datos", error: result.error.errors });
+      }
+      result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
       const usuario = await usuarioModel.findOne({
         where: { mail: result.data.mail },
       });
@@ -68,8 +73,7 @@ export class usuarioController {
         res.status(400).json({ msg: "El mail ya esta registrado" });
       } else {
         const newUsuario = await usuarioModel.create(result.data);
-        res.statusCode = 201;
-        res.json(newUsuario);
+        res.json(newUsuario).status(201);
       }
     } catch (error) {
       res.status(500).json({
@@ -80,19 +84,21 @@ export class usuarioController {
   }
 
   static async update(req, res) {
-    const result = validateParcialUsuario(req.body);
-    if (result.error) {
-      res
-        .status(400)
-        .json({ msg: "Error ingreso de datos", error: result.error.errors });
-    }
     try {
-      const usuario = await usuarioModel.update(result.data, {
+      const result = validateParcialUsuario(req.body);
+      if (result.error) {
+        res
+          .status(400)
+          .json({ msg: "Error ingreso de datos", error: result.error.errors });
+      }
+      await usuarioModel.update(result.data, {
         where: { id: req.params.id },
       });
-      res.json({
-        msg: "Usuario actualizado",
-      });
+      res
+        .json({
+          msg: "Usuario actualizado",
+        })
+        .status(200);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de actualizar el usuario",
@@ -108,7 +114,7 @@ export class usuarioController {
         res.status(404).json({ msg: "No existe el usuario" });
       }
       await usuario.destroy();
-      res.json({ msg: "Usuario eliminado" });
+      res.json({ msg: "Usuario eliminado" }).status(200);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de eliminar el usuario",

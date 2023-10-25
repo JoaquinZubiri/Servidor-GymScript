@@ -18,6 +18,9 @@ export class localidadController {
           attributes: ["nombre"],
         },
       });
+      if (!localidad) {
+        res.status(404).json({ msg: "No se encontraron localidades" });
+      }
       res.json(localidad);
     } catch (error) {
       res.status(500).json({
@@ -37,11 +40,10 @@ export class localidadController {
           attributes: ["nombre"],
         },
       });
-      if (localidad) {
-        res.json(localidad);
-      } else {
+      if (!localidad) {
         res.status(404).json({ error: "Localidad no encontrada" });
       }
+      res.json(localidad);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de obtener la localidad",
@@ -58,8 +60,8 @@ export class localidadController {
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
       }
-      const localidad = await localidadModel.create(result.data);
-      res.status(201).json(localidad);
+      await localidadModel.create(result.data);
+      res.status(201).json({ msg: "Localidad creada" });
     } catch (error) {
       if (error.message.includes("foreign key constraint fails")) {
         res.status(400).json({ error: "La provincia no existe" });
@@ -79,12 +81,14 @@ export class localidadController {
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
       }
-      const localidad = await localidadModel.update(result.data, {
+      await localidadModel.update(result.data, {
         where: { id: req.params.id },
       });
-      res.json({
-        msg: "Localidad actualizada",
-      });
+      res
+        .json({
+          msg: "Localidad actualizada",
+        })
+        .status(200);
     } catch (error) {
       if (error.message.includes("foreign key constraint fails")) {
         res.status(400).json({ error: "La provincia no existe" });
@@ -103,7 +107,7 @@ export class localidadController {
         res.status(404).json({ msg: "No existe la localidad" });
       }
       await localidad.destroy();
-      res.json({ msg: "Localidad eliminada" });
+      res.json({ msg: "Localidad eliminada" }).status(200);
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de eliminar la localidad",

@@ -4,6 +4,7 @@ import { usuarioRouter } from "./routes/usuario.js";
 import { productoRouter } from "./routes/producto.js";
 import { provinciaRouter } from "./routes/provincia.js";
 import { localidadRouter } from "./routes/localidad.js";
+import { planRouter } from "./routes/plan.js";
 // import "dotenv/config.js";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/productos", productoRouter);
 app.use("/provincias", provinciaRouter);
 app.use("/localidades", localidadRouter);
+app.use("/planes", planRouter);
 
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });
