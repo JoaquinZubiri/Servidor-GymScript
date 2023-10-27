@@ -27,8 +27,7 @@ export class sedeController {
 
   static async getById(req, res) {
     try {
-      const { id } = req.params;
-      const sede = await sedeModel.findByPk(id, {
+      const sede = await sedeModel.findByPk(req.params.id, {
         include: {
           model: localidadModel,
           as: "localidad",
@@ -78,13 +77,12 @@ export class sedeController {
         res
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
-        return;
       } else {
         const sede = await sedeModel.findByPk(req.params.id);
         if (!sede) {
           res.status(404).json({ error: "Sede no encontrada" });
         } else {
-          await sedeModel.update(result.data, { where: { id: req.params.id } });
+          await sede.update(result.data, { where: { id: req.params.id } });
           res.status(200).json({ msg: "Sede actualizada" });
         }
       }

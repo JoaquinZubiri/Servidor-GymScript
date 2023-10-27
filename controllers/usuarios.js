@@ -9,24 +9,24 @@ import {
 
 export class usuarioController {
   static async getAll(req, res) {
-    const mail = req.query.mail;
-    //Si viene el mail como query param, se busca por mail
-    if (mail) {
-      try {
-        const usuario = await usuarioModel.findOne({ where: { mail } });
-        if (!usuario) {
-          res.status(404).json({ msg: "No existe usuario con este mail" });
-        } else {
-          res.json(usuario);
-        }
-      } catch (error) {
-        res.status(500).json({
-          msg: "Ocurrio un error a la hora de obtener el usuario",
-          error: error.message,
-        });
-      }
-    }
     try {
+      const mail = req.query.mail;
+      //Si viene el mail como query param, se busca por mail
+      if (mail) {
+        try {
+          const usuario = await usuarioModel.findOne({ where: { mail } });
+          if (!usuario) {
+            res.status(404).json({ msg: "No existe usuario con este mail" });
+          } else {
+            res.json(usuario);
+          }
+        } catch (error) {
+          res.status(500).json({
+            msg: "Ocurrio un error a la hora de obtener el usuario",
+            error: error.message,
+          });
+        }
+      }
       const usuario = await usuarioModel.findAll();
       if (usuario.length === 0) {
         res.status(404).json({ msg: "No existen usuarios" });
@@ -131,29 +131,36 @@ export class usuarioController {
   }
 
   static async loginUser(req, res) {
-    const result = validateParcialUsuario(req.body);
-    const { mail, contraseña } = result.data;
     try {
-      const usuario = await usuarioModel.findOne({ where: { mail } });
-      if (!usuario) {
+      const result = validateParcialUsuario(req.body);
+      if (result.error) {
         res
           .status(400)
-          .json({ msg: "El mail o la contraseña no son correctos" });
+          .json({ msg: "Error ingreso de datos", error: result.error.errors });
       } else {
-        const match = await bcrypt.compare(contraseña, usuario.contraseña);
-        if (!match) {
+        const { mail, contraseña } = result.data;
+
+        const usuario = await usuarioModel.findOne({ where: { mail } });
+        if (!usuario) {
           res
             .status(400)
             .json({ msg: "El mail o la contraseña no son correctos" });
         } else {
-          const token = jwt.sign(
-            {
-              mail: usuario.mail,
-            },
-            process.env.SECRET_KEY || "passwordJWT",
-            { expiresIn: "1h" }
-          );
-          res.json(token);
+          const match = await bcrypt.compare(contraseña, usuario.contraseña);
+          if (!match) {
+            res
+              .status(400)
+              .json({ msg: "El mail o la contraseña no son correctos" });
+          } else {
+            const token = jwt.sign(
+              {
+                mail: usuario.mail,
+              },
+              process.env.SECRET_KEY || "passwordJWT",
+              { expiresIn: "1h" }
+            );
+            res.json(token);
+          }
         }
       }
     } catch (error) {

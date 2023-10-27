@@ -32,8 +32,7 @@ export class localidadController {
 
   static async getById(req, res) {
     try {
-      const { id } = req.params;
-      const localidad = await localidadModel.findByPk(id, {
+      const localidad = await localidadModel.findByPk(req.params.id, {
         include: {
           model: provinciaModel,
           as: "provincia",

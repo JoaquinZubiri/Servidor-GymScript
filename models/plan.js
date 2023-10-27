@@ -19,6 +19,3 @@ export const planModel = db.define(
   },
   { freezeTableName: true, timestamps: false }
 );
-
-//Hay que hacer las relaciones con inscripcion y con actividad
-// planModel.belongsTo(inscripcionModel, { foreignKey: "idPlan" })
