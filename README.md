@@ -1,8 +1,12 @@
-BACKEND - Proyecto GymScript - DSW
+# TpDsw | Repositorio BackEnd
 
-TODO:
--Proteccion de rutas
--CRUD demas tablas (agregar rooteo)
+## Integrantes:
 
+- Fani, Nicolás
+- Fina, Gino
+- Sanchez, Franco Nahuel
+- Mongelos, Manuel
+- Zubiri, Joaquin
 
-LINK API: https://servidordsw.onrender.com
+## Link
+[https://servidordsw.onrender.com](https://servidordsw.onrender.com)
