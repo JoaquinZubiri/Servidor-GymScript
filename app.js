@@ -9,14 +9,14 @@ import { sedeRouter } from "./routes/sede.js";
 import { inscripcionRouter } from "./routes/inscripcion.js";
 import { actividadRouter } from "./routes/actividad.js";
 import { planActividadRouter } from "./routes/plan-actividad.js";
-// import "dotenv/config.js";
+// import { configDotenv } from "dotenv"; 
+import 'dotenv/config'
+
 
 const app = express();
 app.use(cors());
 app.use(json()); //Middleware para poder recuperar el body de la req en formato JSON
 app.disable("x-powered-by");
-// dotenv.config();
-const PORT = process.env.PORT ?? 1234;
 
 app.use("/usuarios", usuarioRouter);
 app.use("/productos", productoRouter);
@@ -28,11 +28,11 @@ app.use("/inscripciones", inscripcionRouter);
 app.use("/actividades", actividadRouter);
 app.use("/plan-actividades", planActividadRouter);
 
+
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });
 });
 
-app.listen(PORT, () => {
+app.listen("1234", () => {
   console.log("Servidor escuchando en https://servidordsw.onrender.com:");
-  // console.log(`http://localhost:${PORT}`);
 });
