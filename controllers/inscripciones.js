@@ -2,6 +2,7 @@ import { inscripcionModel } from "../models/inscripcion.js";
 import { usuarioModel } from "../models/usuario.js";
 import { planModel } from "../models/plan.js";
 import { sedeModel } from "../models/sede.js";
+import jwt from "jsonwebtoken";
 
 import {
   validateInscripcion,
@@ -71,6 +72,9 @@ export class inscripcionController {
 
   static async create(req, res) {
     try {
+      //probar recuperar el token del header y obtener el id del usuario logueado
+      // const token = jwt.decode(req.headers.authorization.split(" ")[1]);
+      // req.body.idUsuario = parseInt(token.id);
       const result = validateInscripcion(req.body);
       if (result.error) {
         res.status(400).json({

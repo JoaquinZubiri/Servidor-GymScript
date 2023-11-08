@@ -56,6 +56,9 @@ export class usuarioController {
       req.body.rol = "user";
     }
     try {
+      let dni = req.body.dni;
+      dni = parseInt(dni);
+      req.body.dni = dni;
       const result = validateUsuario(req.body);
       if (result.error) {
         res
@@ -149,6 +152,7 @@ export class usuarioController {
             const token = jwt.sign(
               {
                 mail: usuario.mail,
+                id: usuario.id,
               },
               process.env.SECRET_KEY || "passwordJWT",
               { expiresIn: "1h" }
