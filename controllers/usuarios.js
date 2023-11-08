@@ -153,6 +153,7 @@ export class usuarioController {
               {
                 mail: usuario.mail,
                 id: usuario.id,
+                rol: usuario.rol,
               },
               process.env.SECRET_KEY || "passwordJWT",
               { expiresIn: "1h" }
