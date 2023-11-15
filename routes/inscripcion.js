@@ -4,11 +4,11 @@ import { inscripcionController } from "../controllers/inscripciones.js";
 export const inscripcionRouter = Router();
 
 /*URLS para consulta de atributos en GETALL
-http://localhost:1234/inscripciones?idUsuario=1
-http://localhost:1234/inscripciones?idPlan=1
-http://localhost:1234/inscripciones?idSede=1
-http://localhost:1234/inscripciones?idUsuario=1&fechaBaja=null
-http://localhost:1234/inscripciones?fechaBaja=null
+url/inscripciones?idUsuario=1 --> Devuelve todas las inscripciones del usuario con id 1
+url/inscripciones?idPlan=1 --> Devuelve todas las inscripciones del plan con id 1
+url/inscripciones?idSede=1 --> Devuelve todas las inscripciones de la sede con id 1
+url/inscripciones?idUsuario=1&fechaBaja=null --> Devuelve todas las inscripciones del usuario con id 1 que estan activas(fechaBaja=null)
+url/inscripciones?fechaBaja=null --> Devuelve todas las inscripciones que estan activas(fechaBaja=null)
 */
 inscripcionRouter.get("/", inscripcionController.getAll);
 

@@ -1,5 +1,6 @@
 import db from "../db/connection.js";
 import { DataTypes } from "sequelize";
+// imports de relaciones
 import { actividadModel } from "./actividad.js";
 import { planModel } from "./plan.js";
 
@@ -18,6 +19,7 @@ export const planActividadModel = db.define(
   { freezeTableName: true, timestamps: false }
 );
 
+// Relaciones
 planActividadModel.belongsTo(planModel, { foreignKey: "idPlan" });
 
 planModel.hasMany(planActividadModel, {

@@ -3,7 +3,7 @@ import { actividadController } from "../controllers/actividades.js";
 
 export const actividadRouter = Router();
 
-//http://localhost:1234/actividades?nombre=nombre
+//url/actividades?nombre=nombre --> entra a getAll y devuelve todas las actividades con ese nombre
 actividadRouter.get("/", actividadController.getAll);
 
 actividadRouter.get("/:id", actividadController.getById);

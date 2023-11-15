@@ -2,20 +2,29 @@ import { inscripcionModel } from "../models/inscripcion.js";
 import { usuarioModel } from "../models/usuario.js";
 import { planModel } from "../models/plan.js";
 import { sedeModel } from "../models/sede.js";
+import { cuotaModel } from "../models/cuota.js";
+import { cuotaController } from "./cuotas.js";
+
 import jwt from "jsonwebtoken";
 
 import {
   validateInscripcion,
   validateParcialInscripcion,
+  validateCreateInscripcion,
 } from "../Schemas/inscripcion.js";
+import e from "express";
+
+// DEVOLVEMOS TODOS LOS ATRIBUTOS DE LAS RELACIONES CON INSCRIPCION
 
 export class inscripcionController {
   static async getAll(req, res) {
     try {
+      // Recuperamos los parametros de la query
       const idSede = req.query.idSede;
       const idPlan = req.query.idPlan;
       const fechaBaja = req.query.fechaBaja;
       const idUsuario = req.query.idUsuario;
+      // Llamamos a la funcion que arma la query segun los parametros
       const inscripciones = await parametrosQueryGetAll(
         idUsuario,
         idPlan,
@@ -72,10 +81,7 @@ export class inscripcionController {
 
   static async create(req, res) {
     try {
-      //probar recuperar el token del header y obtener el id del usuario logueado
-      // const token = jwt.decode(req.headers.authorization.split(" ")[1]);
-      // req.body.idUsuario = parseInt(token.id);
-      const result = validateInscripcion(req.body);
+      const result = validateCreateInscripcion(req.body);
       if (result.error) {
         res.status(400).json({
           msg: "Error ingreso de datos",
@@ -91,12 +97,36 @@ export class inscripcionController {
             .status(400)
             .json({ error: "El usuario ya tiene una inscripcion activa" });
         } else {
-          await inscripcionModel.create(result.data);
-          res.status(201).json({ msg: "Inscripcion creada" });
+          //Creo fecha de alta de la inscripcion
+          let fechaAlta = new Date();
+          result.data.fechaAlta = fechaAlta.toISOString().split("T")[0];
+          result.data.fechaBaja = null;
+          const insc = await inscripcionModel.create(result.data);
+          //Busco la inscripcion creada para sacar el id y el monto para crear la cuota
+          const inscParametro = await inscripcionModel.findByPk(insc.id, {
+            include: [
+              {
+                model: planModel,
+                as: "plan",
+                attributes: ["precioMensual"],
+              },
+            ],
+          });
+          //crear cuota
+          const cuota = await cuotaController.instanciarCuota(inscParametro);
+          if (!cuota) {
+            res.status(500).json({
+              msg: "Ocurrio un error a la hora de crear la cuota de la inscripcion",
+            });
+          } else {
+            res
+              .status(201)
+              .json({ msg: "Inscripcion creada con su cuota paga" });
+          }
         }
       }
     } catch (error) {
-      //if o switch para manejo de de error de cada FK
+      //if para manejo de de error de cada FK
       if (error.message.includes("FOREIGN KEY (`idUsuario`)")) {
         res.status(400).json({ error: "El usuario ingresado no existe" });
       } else if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
@@ -139,6 +169,7 @@ export class inscripcionController {
           .json({ error: "Solo se puede modificar la fecha de baja" });
       }
     } catch (error) {
+      //if para manejo de de error de cada FK
       if (error.message.includes("FOREIGN KEY (`idUsuario`)")) {
         res.status(400).json({ error: "El usuario ingresado no existe" });
       } else if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
@@ -164,15 +195,27 @@ export class inscripcionController {
         res.status(200).json({ msg: "Inscripcion eliminada" });
       }
     } catch (error) {
-      res.status(500).json({
-        msg: "Ocurrio un error a la hora de eliminar la inscripcion",
-        error: error.message,
-      });
+      if (
+        error.message.includes(
+          "Cannot delete or update a parent row: a foreign key constraint fails"
+        )
+      ) {
+        res.status(400).json({
+          error:
+            "No se puede eliminar la inscripcion porque tiene cuotas asociadas",
+        });
+      } else {
+        res.status(500).json({
+          msg: "Ocurrio un error a la hora de eliminar la inscripcion",
+          error: error.message,
+        });
+      }
     }
   }
 }
 
 function validarBodyUpdate(reqBody) {
+  // Validamos que en el body solo venga la fecha de baja
   if (
     reqBody.idUsuario == undefined &&
     reqBody.idPlan == undefined &&
@@ -188,8 +231,10 @@ function validarBodyUpdate(reqBody) {
 
 async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
   try {
+    // Validamos cuales fueron los parametros que se enviaron y armamos la query a la BD dependiendo de esto.
     let inscripciones = undefined;
     if (idUsuario && fechaBaja) {
+      // Todas las inscripciones activas de un usuario
       inscripciones = await inscripcionModel.findAll({
         where: { idUsuario, fechaBaja: null },
         include: [
@@ -211,6 +256,7 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
         ],
       });
     } else if (fechaBaja) {
+      // Todas las inscripciones activas
       inscripciones = await inscripcionModel.findAll({
         where: { fechaBaja: null },
         include: [
@@ -232,6 +278,7 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
         ],
       });
     } else if (idUsuario) {
+      // Todas las inscripciones de un usuario
       inscripciones = await inscripcionModel.findAll({
         where: { idUsuario },
         include: [
@@ -253,6 +300,7 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
         ],
       });
     } else if (idPlan) {
+      // Todas las inscripciones de un plan
       inscripciones = await inscripcionModel.findAll({
         where: { idPlan },
         include: [
@@ -274,6 +322,7 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
         ],
       });
     } else if (idSede) {
+      // Todas las inscripciones de una sede
       inscripciones = await inscripcionModel.findAll({
         where: { idSede },
         include: [
@@ -295,6 +344,7 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
         ],
       });
     } else {
+      // Todas las inscripciones
       inscripciones = await inscripcionModel.findAll({
         include: [
           {

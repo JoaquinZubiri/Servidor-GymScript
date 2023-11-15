@@ -1,8 +1,8 @@
 import z from "zod";
 
 const ActividadSchema = z.object({
-  nombre: z.string(),
-  descripcion: z.string(),
+  nombre: z.string().min(1),
+  descripcion: z.string().min(1),
 });
 
 export function validateActividad(object) {

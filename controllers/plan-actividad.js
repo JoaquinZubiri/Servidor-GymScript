@@ -10,8 +10,10 @@ import {
 export class planActividadController {
   static async getAll(req, res) {
     try {
+      // Recibimos los parametros de la query
       const idPlan = req.query.idPlan;
       const idActividad = req.query.idActividad;
+      // Llamamos a la funcion que arma la query segun los parametros recibidos
       const planActividades = await parametrosQueryGetAll(idPlan, idActividad);
       if (planActividades.length === 0) {
         res
@@ -72,6 +74,7 @@ export class planActividadController {
         res.status(201).json({ msg: "Asociacion plan con actividad creado" });
       }
     } catch (error) {
+      // //if para manejo de de error de cada FK
       if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
         res.status(400).json({ msg: "El plan ingresado no existe" });
       } else if (error.message.includes("FOREIGN KEY (`idActividad`)")) {
@@ -107,6 +110,7 @@ export class planActividadController {
         }
       }
     } catch (error) {
+      //if para manejo de de error de cada FK
       if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
         res.status(400).json({ msg: "El plan ingresado no existe" });
       } else if (error.message.includes("FOREIGN KEY (`idActividad`)")) {
@@ -144,8 +148,10 @@ export class planActividadController {
 
 async function parametrosQueryGetAll(idPlan, idActividad) {
   try {
+    // funcion para armar la query segun los parametros recibidos
     let planActividades = [];
     if (idPlan) {
+      // Todas las actividades de un plan
       planActividades = await planActividadModel.findAll({
         where: {
           idPlan: idPlan,
@@ -164,6 +170,7 @@ async function parametrosQueryGetAll(idPlan, idActividad) {
         ],
       });
     } else if (idActividad) {
+      // Todos los planes que contienen a la actividad
       planActividades = await planActividadModel.findAll({
         where: {
           idActividad: idActividad,
@@ -182,6 +189,7 @@ async function parametrosQueryGetAll(idPlan, idActividad) {
         ],
       });
     } else {
+      // Todas las actividades de todos los planes
       planActividades = await planActividadModel.findAll({
         include: [
           {

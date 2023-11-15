@@ -7,6 +7,7 @@ import {
 export class actividadController {
   static async getAll(req, res) {
     try {
+      // Si viene el nombre como query param, se busca por nombre
       const nombre = req.query.nombre;
       if (nombre) {
         const actividad = await actividadModel.findOne({ where: { nombre } });
@@ -18,6 +19,7 @@ export class actividadController {
           res.json(actividad);
         }
       } else {
+        // Si no viene el nombre, se buscan todas las actividades
         const actividad = await actividadModel.findAll();
         if (actividad.length === 0) {
           res.status(404).json({ error: "No se encontraron actividades" });

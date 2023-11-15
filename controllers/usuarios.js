@@ -1,7 +1,8 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt"; // Libreria para encriptar contraseñas
+import jwt from "jsonwebtoken"; // libreria para crear tokens
 
 import { usuarioModel } from "../models/usuario.js";
+//Libreria para validar los datos ingresados en el body
 import {
   validateUsuario,
   validateParcialUsuario,
@@ -20,6 +21,7 @@ export class usuarioController {
           res.json(usuario);
         }
       } else {
+        //Si no viene el mail como query param, se buscan todos los usuarios
         const usuario = await usuarioModel.findAll();
         if (usuario.length === 0) {
           res.status(404).json({ msg: "No existen usuarios" });
@@ -52,20 +54,23 @@ export class usuarioController {
   }
 
   static async create(req, res) {
+    //Si no viene el rol en el body, se asigna por defecto el rol user
     if (!req.body.rol) {
       req.body.rol = "user";
     }
     try {
-      let dni = req.body.dni;
-      dni = parseInt(dni);
-      req.body.dni = dni;
+      // let dni = req.body.dni;
+      // dni = parseInt(dni);
+      // req.body.dni = dni;
       const result = validateUsuario(req.body);
       if (result.error) {
         res
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
       } else {
+        // Encriptamos la contraseña
         result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
+        // Buscamos si existe el mail
         const usuario = await usuarioModel.findOne({
           where: { mail: result.data.mail },
         });
@@ -135,20 +140,22 @@ export class usuarioController {
           .status(400)
           .json({ msg: "Error ingreso de datos", error: result.error.errors });
       } else {
+        // Obtenemos el mail y la contraseña del body
         const { mail, contraseña } = result.data;
-
         const usuario = await usuarioModel.findOne({ where: { mail } });
         if (!usuario) {
           res
             .status(400)
             .json({ msg: "El mail o la contraseña no son correctos" });
         } else {
+          // Comparamos la contraseña ingresada con la contraseña encriptada
           const match = await bcrypt.compare(contraseña, usuario.contraseña);
           if (!match) {
             res
               .status(400)
               .json({ msg: "El mail o la contraseña no son correctos" });
           } else {
+            // Creamos el token
             const token = jwt.sign(
               {
                 mail: usuario.mail,

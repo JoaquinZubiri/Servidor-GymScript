@@ -5,8 +5,8 @@ import {
   validateParcialLocalidad,
 } from "../Schemas/localidades.js";
 
-// VER SI HACE FALTA!! EN EL getAll Y getById DEVOLVER LA PROVINCIA CON EL JOIN (MAYOR COSTO DE PROCESAMIENTO)
-//    const localidad = await localidadModel.findAll();
+// DEVOLVEMOS TODOS LOS ATRIBUTOS DE LAS RELACIONES DE LA TABLA LOCALIDAD
+
 export class localidadController {
   static async getAll(req, res) {
     try {

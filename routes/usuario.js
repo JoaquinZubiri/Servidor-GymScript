@@ -3,6 +3,7 @@ import { usuarioController } from "../controllers/usuarios.js";
 
 export const usuarioRouter = Router();
 
+// url/usuarios?mail=mail --> Devuelve el usuario con ese mail
 usuarioRouter.get("/", usuarioController.getAll);
 
 usuarioRouter.get("/:id", usuarioController.getById);

@@ -9,15 +9,16 @@ import { sedeRouter } from "./routes/sede.js";
 import { inscripcionRouter } from "./routes/inscripcion.js";
 import { actividadRouter } from "./routes/actividad.js";
 import { planActividadRouter } from "./routes/plan-actividad.js";
-// import { configDotenv } from "dotenv"; 
-import 'dotenv/config'
-
+import { coutaRouter } from "./routes/cuota.js";
+// import { configDotenv } from "dotenv";
+import "dotenv/config";
 
 const app = express();
-app.use(cors());
+app.use(cors()); //Middleware para permitir el acceso a la API desde cualquier origen
 app.use(json()); //Middleware para poder recuperar el body de la req en formato JSON
-app.disable("x-powered-by");
+app.disable("x-powered-by"); // Middleware para ocultar información del servidor
 
+// Agregamos las rutas
 app.use("/usuarios", usuarioRouter);
 app.use("/productos", productoRouter);
 app.use("/provincias", provinciaRouter);
@@ -27,7 +28,7 @@ app.use("/sedes", sedeRouter);
 app.use("/inscripciones", inscripcionRouter);
 app.use("/actividades", actividadRouter);
 app.use("/plan-actividades", planActividadRouter);
-
+app.use("/cuotas", coutaRouter);
 
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });

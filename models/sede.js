@@ -1,7 +1,7 @@
 import db from "../db/connection.js";
 import { DataTypes } from "sequelize";
+// imports de relaciones
 import { localidadModel } from "./localidad.js";
-// import { inscripcionModel } from "./inscripcion.js";
 
 export const sedeModel = db.define(
   "sede",
@@ -18,6 +18,7 @@ export const sedeModel = db.define(
   { freezeTableName: true, timestamps: false }
 );
 
+// Relaciones
 localidadModel.hasMany(sedeModel, {
   foreignKey: "idLocalidad",
   sourceKey: "id",
@@ -27,5 +28,3 @@ sedeModel.belongsTo(localidadModel, {
   foreignKey: "idLocalidad",
   as: "localidad",
 });
-
-// sedeModel.hasMany(inscripcionModel, { foreignKey: "idSede", sourceKey: "id" });

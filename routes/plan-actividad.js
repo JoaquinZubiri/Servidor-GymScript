@@ -3,8 +3,8 @@ import { planActividadController } from "../controllers/plan-actividad.js";
 
 export const planActividadRouter = Router();
 
-// http://localhost:3001/plan-actividades?idPlan=1
-// http://localhost:3001/plan-actividades?idActividad=1
+// url/plan-actividades?idPlan=1 --> Devuelve todas las actividades del plan con id 1
+// url/plan-actividades?idActividad=1 --> Devuelve todos los planes que contienen la actividad con id 1
 planActividadRouter.get("/", planActividadController.getAll);
 
 planActividadRouter.get("/:id", planActividadController.getById);

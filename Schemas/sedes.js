@@ -1,7 +1,7 @@
 import z from "zod";
 
 const sedesSchema = z.object({
-  direccion: z.string(),
+  direccion: z.string().min(1),
   idLocalidad: z.number(),
 });
 

@@ -1,7 +1,7 @@
 import z from "zod";
 
 const provinciaSchema = z.object({
-  nombre: z.string(),
+  nombre: z.string().min(1),
 });
 
 export function validateProvincia(object) {

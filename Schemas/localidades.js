@@ -1,8 +1,8 @@
 import z from "zod";
 
 const localidadSchema = z.object({
-  nombre: z.string(),
-  codPostal: z.string(),
+  nombre: z.string().min(1),
+  codPostal: z.string().min(1),
   idProvincia: z.number(),
 });
 
