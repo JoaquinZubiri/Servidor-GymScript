@@ -24,12 +24,15 @@ export class inscripcionController {
       const idPlan = req.query.idPlan;
       const fechaBaja = req.query.fechaBaja;
       const idUsuario = req.query.idUsuario;
+      // Para llamar con la cuota
+      const couta = req.query.cuota;
       // Llamamos a la funcion que arma la query segun los parametros
       const inscripciones = await parametrosQueryGetAll(
         idUsuario,
         idPlan,
         idSede,
-        fechaBaja
+        fechaBaja,
+        couta
       );
 
       if (inscripciones.length === 0) {
@@ -229,7 +232,13 @@ function validarBodyUpdate(reqBody) {
   }
 }
 
-async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
+async function parametrosQueryGetAll(
+  idUsuario,
+  idPlan,
+  idSede,
+  fechaBaja,
+  cuota
+) {
   try {
     // Validamos cuales fueron los parametros que se enviaron y armamos la query a la BD dependiendo de esto.
     let inscripciones = undefined;
@@ -340,6 +349,35 @@ async function parametrosQueryGetAll(idUsuario, idPlan, idSede, fechaBaja) {
             model: sedeModel,
             as: "sede",
             attributes: ["id", "direccion"],
+          },
+        ],
+      });
+    } else if (cuota) {
+      //Devuelve todas las inscripciones con su ultima cuota
+      //La cuota se encuentra en un array en posicion 0 (porque busca en un findAll)
+      inscripciones = await inscripcionModel.findAll({
+        include: [
+          {
+            model: usuarioModel,
+            as: "usuario",
+            attributes: ["id", "mail", "nombre", "apellido"],
+          },
+          {
+            model: planModel,
+            as: "plan",
+            attributes: ["id", "nombre", "descripcion", "precioMensual"],
+          },
+          {
+            model: sedeModel,
+            as: "sede",
+            attributes: ["id", "direccion"],
+          },
+          {
+            model: cuotaModel,
+            as: "cuota",
+            attributes: ["id", "fechaPago", "importe", "fechaVenc"],
+            limit: 1,
+            order: [["fechaPago", "DESC"]],
           },
         ],
       });

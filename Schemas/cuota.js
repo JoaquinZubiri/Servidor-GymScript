@@ -2,9 +2,9 @@ import z from "zod";
 
 const cuotaSchema = z.object({
   idInscripcion: z.number(),
-  fechaPago: z.date(),
+  fechaPago: z.string(),
   importe: z.number().positive(),
-  fechaVenc: z.date(),
+  fechaVenc: z.string(),
 });
 
 export function validateCuota(object) {
