@@ -1,12 +1,12 @@
 ### Recuperar todos los usuarios
-GET http://localhost:1234/usuarios
+GET https://servidordsw.onrender.com/usuarios
 
 ### Recuperar un usuario por id
 
 ### Recuperar un usuario por email
 
 ### Crear un usuario con POST
-POST http://localhost:1234/usuarios
+POST https://servidordsw.onrender.com/usuarios
 Content-Type: application/json
 
 {
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ### Actualizar algo a un usuario con PATCH
-PATCH http://localhost:1234/usuarios/1
+PATCH https://servidordsw.onrender.com/usuarios/1
 Content-Type: application/json
 
 {
@@ -28,17 +28,17 @@ Content-Type: application/json
 }
 
 ### Eliminar un usuario con DELETE  
-DELETE http://localhost:1234/usuarios/7
+DELETE https://servidordsw.onrender.com/usuarios/7
 
 
 ### Recuperar todos los productos
-GET http://localhost:1234/productos
+GET https://servidordsw.onrender.com/productos
 
 ### Recuperar un producto por id
-GET http://localhost:1234/productos/1
+GEThttps://servidordsw.onrender.com/productos/1
 
 ### Crear un producto con POST
-POST http://localhost:1234/productos
+POST https://servidordsw.onrender.com/productos
 Content-Type: application/json
 
 {

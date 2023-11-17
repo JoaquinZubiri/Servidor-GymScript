@@ -243,7 +243,7 @@ async function parametrosQueryGetAll(
     // Validamos cuales fueron los parametros que se enviaron y armamos la query a la BD dependiendo de esto.
     let inscripciones = undefined;
     if (idUsuario && fechaBaja) {
-      // Todas las inscripciones activas de un usuario
+      // Todas las inscripciones activas de un usuario con su ultima cuota
       inscripciones = await inscripcionModel.findAll({
         where: { idUsuario, fechaBaja: null },
         include: [
@@ -261,6 +261,13 @@ async function parametrosQueryGetAll(
             model: sedeModel,
             as: "sede",
             attributes: ["id", "direccion"],
+          },
+          {
+            model: cuotaModel,
+            as: "cuota",
+            attributes: ["id", "fechaPago", "importe", "fechaVenc"],
+            limit: 1,
+            order: [["fechaPago", "DESC"]],
           },
         ],
       });
