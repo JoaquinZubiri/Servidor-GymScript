@@ -3,8 +3,8 @@ import z from "zod";
 const inscripcionSchema = z.object({
   idUsuario: z.number(),
   idPlan: z.number(),
-  fechaAlta: z.date(),
-  fechaBaja: z.date().nullable(),
+  fechaAlta: z.string(),
+  fechaBaja: z.string().nullable(),
   idSede: z.number(),
 });
 
