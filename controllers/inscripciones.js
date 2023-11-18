@@ -260,7 +260,7 @@ async function parametrosQueryGetAll(
           {
             model: sedeModel,
             as: "sede",
-            attributes: ["id", "direccion"],
+            attributes: ["id", "direccion", "idLocalidad"],
           },
           {
             model: cuotaModel,
