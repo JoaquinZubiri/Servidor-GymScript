@@ -2,7 +2,7 @@ import { cuotaModel } from "../models/cuota.js";
 import { inscripcionModel } from "../models/inscripcion.js";
 import { planModel } from "../models/plan.js";
 
-import { validateCuota, validateParcialCuota } from "../Schemas/cuota.js";
+import { validateCuota, validateParcialCuota, validateCuotaUpdate } from "../Schemas/cuota.js";
 
 export class cuotaController {
   static async getAll(req, res) {
@@ -49,7 +49,7 @@ export class cuotaController {
   // Metodo Update sin restricciones (para testear)
   static async update(req, res) {
     try {
-      const result = validateParcialCuota(req.body);
+      const result = validateCuotaUpdate(req.body);
       if (result.error) {
         res.status(400).json({ error: "Error ingreso de datos" });
       } else {

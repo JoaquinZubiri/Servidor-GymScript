@@ -18,6 +18,10 @@ export function validateParcialCuota(object) {
     .safeParse(object);
 }
 
+export function validateCuotaUpdate(object) {
+  return cuotaSchema.partial().safeParse(object);
+  }
+
 /* 
 EJEMPLOS DE DATES PERMITIDOS POR ZOD
 // valid dates
