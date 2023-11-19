@@ -12,6 +12,8 @@ coutaRouter.get("/", cuotaController.getAll);
 
 coutaRouter.get("/:id", cuotaController.getById);
 
+coutaRouter.patch("/:id", cuotaController.update);
+
 coutaRouter.post("/", cuotaController.pagar);
 
 coutaRouter.post("/crear", cuotaController.create);
