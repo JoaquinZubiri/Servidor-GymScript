@@ -101,6 +101,10 @@ export class usuarioController {
         if (!usuario) {
           res.status(404).json({ msg: "No existe el usuario a actualizar" });
         } else {
+          //Si se mando una contraseña para actualizar, se encripta
+          if(result.data.contraseña){
+            result.data.contraseña = await bcrypt.hash(result.data.contraseña, 10);
+          }
           await usuarioModel.update(result.data, {
             where: { id: req.params.id },
           });
