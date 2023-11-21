@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f41d366d-91e5-11e9-8525-cecd028ee826:1-134698348';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f41d366d-91e5-11e9-8525-cecd028ee826:1-134807431';
 
 --
 -- Table structure for table `actividad`
@@ -93,7 +93,7 @@ CREATE TABLE `cuota` (
   PRIMARY KEY (`id`),
   KEY `fk_insc_couta_idx` (`idInscripcion`),
   CONSTRAINT `fk_insc_couta` FOREIGN KEY (`idInscripcion`) REFERENCES `inscripcion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `cuota` (
 
 LOCK TABLES `cuota` WRITE;
 /*!40000 ALTER TABLE `cuota` DISABLE KEYS */;
-INSERT INTO `cuota` VALUES ('2023-11-15',6000,'2023-12-15',5,24),('2023-11-15',6000,'2023-12-15',62,52),('2023-10-14',4000,'2023-11-14',63,52);
+INSERT INTO `cuota` VALUES ('2023-11-19',12000,'2023-12-19',109,100),('2023-11-19',12000,'2023-12-19',110,101),('2023-11-20',6000,'2023-12-20',111,102),('2023-11-20',8000,'2023-12-20',112,103);
 /*!40000 ALTER TABLE `cuota` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `inscripcion` (
   CONSTRAINT `fk_plan-Insc` FOREIGN KEY (`idPlan`) REFERENCES `plan` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_sede_insc` FOREIGN KEY (`idSede`) REFERENCES `sede` (`id`),
   CONSTRAINT `fk_usuario_insc` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +190,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
-INSERT INTO `inscripcion` VALUES (4,'2023-11-11',NULL,6,24,11),(4,'2023-11-15',NULL,6,52,12);
+INSERT INTO `inscripcion` VALUES (9,'2023-11-19','2023-11-19',9,100,34),(9,'2023-11-19',NULL,8,101,34),(4,'2023-11-20','2023-11-20',6,102,35),(10,'2023-11-20',NULL,6,103,36);
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `localidad` (
   UNIQUE KEY `codPostal_UNIQUE` (`codPostal`),
   KEY `fk_prov_loc_idx` (`idProvincia`),
   CONSTRAINT `fk_prov_loc` FOREIGN KEY (`idProvincia`) REFERENCES `provincia` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `localidad` (
 
 LOCK TABLES `localidad` WRITE;
 /*!40000 ALTER TABLE `localidad` DISABLE KEYS */;
-INSERT INTO `localidad` VALUES (7,'Pergamino',113,'2700'),(8,'Rosario',131,'2000');
+INSERT INTO `localidad` VALUES (7,'Pergamino',113,'2700'),(8,'Rosario',131,'2000'),(9,'Villa Carlos Paz',132,'5152');
 /*!40000 ALTER TABLE `localidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +236,7 @@ CREATE TABLE `plan` (
   `descripcion` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `precioMensual` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ CREATE TABLE `producto` (
   `tipo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `img` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +326,7 @@ CREATE TABLE `provincia` (
 
 LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (113,'Buenos Aires'),(134,'Catamarca'),(132,'Cordoba'),(136,'La Pampa'),(137,'La Rioja'),(135,'San Luis'),(131,'Santa Fe'),(133,'Santiago Del Estero');
+INSERT INTO `provincia` VALUES (113,'Buenos Aires'),(134,'Catamarca'),(132,'Cordoba'),(136,'La Pampa'),(137,'La Rioja'),(135,'San Luis'),(131,'Santa Fe');
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,7 +369,7 @@ CREATE TABLE `sede` (
   PRIMARY KEY (`id`),
   KEY `fk_idLocalidad_idx` (`idLocalidad`),
   CONSTRAINT `fk_idLocalidad` FOREIGN KEY (`idLocalidad`) REFERENCES `localidad` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -378,7 +378,7 @@ CREATE TABLE `sede` (
 
 LOCK TABLES `sede` WRITE;
 /*!40000 ALTER TABLE `sede` DISABLE KEYS */;
-INSERT INTO `sede` VALUES (6,'Zeballos 1340',7);
+INSERT INTO `sede` VALUES (6,'Zeballos 1340',7),(8,'Pellegrini 500',8),(9,'Ov. Lagos 4940',8),(10,'Av. Libertad 211',9);
 /*!40000 ALTER TABLE `sede` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +459,7 @@ CREATE TABLE `usuario` (
   `rol` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `mailCli_UNIQUE` (`mail`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +468,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (12313,'Rodrigo','Gimenez',99999999,'mail@gmail.com',11,'$2b$10$Nn2NqPAC2kdkdksJ3NHifKPZRa/.YUmsjnbtgZBHcOeO5GXWJTGLpQ6i/eC','user'),(12313,'asd','qwe',111,'ads',12,'$2b$10$niY3c5RuruVH6fokHhOW8O0Owhvz5znD0YLYBPvttGYxvrwSioz/2','user'),(4444444,'Prueba','Clase',123123,'email@gmail.com',13,'$2b$10$IUHNUnANrExada5DQPYXO.zKYdD5EDW.N0abzO437.T9kETOzwhtu','admin'),(1111111,'otraPrueba','clase',3333333,'gmail@gmail.com',14,'$2b$10$IrWfz4KUrXpIMSOtCWLaBetKQmZKtR6VNk4ijT7/.4uRjbhZciin2','user'),(123,'a','a',1,'a@a.com',16,'$2b$10$71HEFjgIOoIv/2GuFDmQ3.Yifj4B5m1bvf4B39jc19H7.pjIUnxe2','admin'),(5545421,'eaeaea','sasasa',841921,'b@b.com',19,'$2b$10$19hSjaBYHZ1Ggt.DmnOc7u5GIbA8ZfkVWljM3l5U/cdmnH1QdH0bS','user');
+INSERT INTO `usuario` VALUES (12313,'Rodrigo','Gimenez',99999999,'mail@gmail.com',11,'$2b$10$Nn2NqPAC2kdkdksJ3NHifKPZRa/.YUmsjnbtgZBHcOeO5GXWJTGLpQ6i/eC','user'),(123313,'Administrador','Prueba',11212313,'a@a.com',16,'$2b$10$71HEFjgIOoIv/2GuFDmQ3.Yifj4B5m1bvf4B39jc19H7.pjIUnxe2','admin'),(5545421,'Franco','Sanchez',8419212,'b@b.com',19,'$2b$10$hRF4Pwg7uaRz9deu/h.8pewkkoEsfArD8VKb5AgKmciD2JRXGmthG','user'),(2149237,'Roberto','Martinez',328491,'robertoMartinez@gmail.com',24,'$2b$10$nUTwzEIKw.8DGFEFiEnOk.0lPw/8ViFsnWPwUOVwF8qXYyFVZ9lo2','user'),(1000000,'Manuel','Mongelos',3121213,'manumong@gmail.com',25,'$2b$10$Dp8EaZcxXbbdt8UlzZYAGOxtF8EmRMTQAGmdU/e4UNTdntfpXoNA6','user'),(89114112,'aeasae','asas',199121,'onaeonae@gonaoms.com',27,'$2b$10$VPh5IQOqGRn.lkHMqJlN0eo0cFiuXzHlFeA/wF/Al.xEB0igVW2jC','user'),(12345672,'Franco','Sanchez',341648152,'soporte@francosanchez.com.ar',30,'$2b$10$qUdgMm3B2IWT3OzD45xwD.pUeR862tB63f.093XXCQaGMuLWhJHVO','admin'),(919529,'Franco','Sanchez',6146412,'aa@aa.com',34,'$2b$10$MWuBQS6nA0HUH3hV.UutbeCf692GS1QdhXTOE6zB8u/JLHdoAdpfu','user'),(43242343,'augusto','castellano',221432523,'augustocas05@hotmail.com',35,'$2b$10$OrZgRG9MAJdsP2rQtCaCauZVY.vRdSkXcY7zmUpe1JRmhLn/Gd/Yq','user'),(44111222,'Joaquin','Zubiri',24773020,'j@z.com',36,'$2b$10$2K4YP43na/mA0JHXA9fBr.sDWyyhRaAtC.qiPazoO6xo9cYOY/4W.','user'),(121313,'Nicolas','Fani',121212,'aeonae@onma.com',37,'$2b$10$Ygqr7LKNX.TqeEfzovxGEOgyFQR1C/Kk2hQvQzZP9BiMUVWxKOuZi','user'),(1213123,'Gino','Fina',121212,'asmoasm@onae.com',38,'$2b$10$4bOSCvT1KDDA9FVCRlZWeOJEDTf1u.7MPfkLYbJ.oXc5iiraGfB8C','user');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -482,4 +482,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-16 18:08:38
+-- Dump completed on 2023-11-21 15:28:58
