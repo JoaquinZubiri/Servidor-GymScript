@@ -10,6 +10,8 @@ import { inscripcionRouter } from "./routes/inscripcion.js";
 import { actividadRouter } from "./routes/actividad.js";
 import { planActividadRouter } from "./routes/plan-actividad.js";
 import { coutaRouter } from "./routes/cuota.js";
+
+import { validateToken } from "./middleware/validate-token.js";
 // import { configDotenv } from "dotenv";
 import "dotenv/config";
 
@@ -19,15 +21,17 @@ app.use(json()); //Middleware para poder recuperar el body de la req en formato 
 app.disable("x-powered-by"); // Middleware para ocultar información del servidor
 
 // Agregamos las rutas
-app.use("/usuarios", usuarioRouter);
+
 app.use("/productos", productoRouter);
+app.use("/planes", planRouter);
+app.use("/plan-actividades", planActividadRouter);
+app.use("/usuarios", usuarioRouter);
+app.use("/", validateToken);
 app.use("/provincias", provinciaRouter);
 app.use("/localidades", localidadRouter);
-app.use("/planes", planRouter);
 app.use("/sedes", sedeRouter);
 app.use("/inscripciones", inscripcionRouter);
 app.use("/actividades", actividadRouter);
-app.use("/plan-actividades", planActividadRouter);
 app.use("/cuotas", coutaRouter);
 
 app.use((_, res) => {

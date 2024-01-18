@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { planActividadController } from "../controllers/plan-actividad.js";
+import { validateToken } from "../middleware/validate-token.js";
 
 export const planActividadRouter = Router();
 
@@ -9,8 +10,16 @@ planActividadRouter.get("/", planActividadController.getAll);
 
 planActividadRouter.get("/:id", planActividadController.getById);
 
-planActividadRouter.post("/", planActividadController.create);
+planActividadRouter.post("/", validateToken, planActividadController.create);
 
-planActividadRouter.patch("/:id", planActividadController.update);
+planActividadRouter.patch(
+  "/:id",
+  validateToken,
+  planActividadController.update
+);
 
-planActividadRouter.delete("/:id", planActividadController.delete);
+planActividadRouter.delete(
+  "/:id",
+  validateToken,
+  planActividadController.delete
+);
