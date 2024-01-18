@@ -74,11 +74,11 @@ export class planActividadController {
         res.status(201).json({ msg: "Asociacion plan con actividad creado" });
       }
     } catch (error) {
-      // //if para manejo de de error de cada FK
-      if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
-        res.status(400).json({ msg: "El plan ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idActividad`)")) {
-        res.status(400).json({ msg: "La actividad ingresada no existe" });
+      //if para manejo de error de cada FK
+      if (error.message.includes("foreign key constraint fails")) {
+        res
+          .status(400)
+          .json({ msg: "El plan o actividad ingresado no existe" });
       } else {
         res.status(500).json({
           msg: "Ocurrio un error a la hora de asociar un plan a una actividad",
@@ -110,11 +110,11 @@ export class planActividadController {
         }
       }
     } catch (error) {
-      //if para manejo de de error de cada FK
-      if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
-        res.status(400).json({ msg: "El plan ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idActividad`)")) {
-        res.status(400).json({ msg: "La actividad ingresada no existe" });
+      //if para manejo de error de cada FK
+      if (error.message.includes("foreign key constraint fails")) {
+        res
+          .status(400)
+          .json({ msg: "El plan o actividad ingresado no existe" });
       } else {
         res.status(500).json({
           msg: "Ocurrio un error a la hora de actualizar la asociacion entre el plan y la actividad",

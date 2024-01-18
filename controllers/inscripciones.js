@@ -130,12 +130,10 @@ export class inscripcionController {
       }
     } catch (error) {
       //if para manejo de de error de cada FK
-      if (error.message.includes("FOREIGN KEY (`idUsuario`)")) {
-        res.status(400).json({ error: "El usuario ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
-        res.status(400).json({ error: "El plan ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idSede`)")) {
-        res.status(400).json({ error: "La sede ingresada no existe" });
+      if (error.message.includes("foreign key constraint fails")) {
+        res
+          .status(400)
+          .json({ error: "El usuario, el plan o la sede ingresado no existe" });
       } else {
         res.status(500).json({
           msg: "Ocurrio un error a la hora de crear la inscripcion",
@@ -173,12 +171,10 @@ export class inscripcionController {
       }
     } catch (error) {
       //if para manejo de de error de cada FK
-      if (error.message.includes("FOREIGN KEY (`idUsuario`)")) {
-        res.status(400).json({ error: "El usuario ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idPlan`)")) {
-        res.status(400).json({ error: "El plan ingresado no existe" });
-      } else if (error.message.includes("FOREIGN KEY (`idSede`)")) {
-        res.status(400).json({ error: "La sede ingresada no existe" });
+      if (error.message.includes("foreign key constraint fails")) {
+        res
+          .status(400)
+          .json({ error: "El usuario, el plan o la sede ingresado no existe" });
       } else {
         res.status(500).json({
           msg: "Ocurrio un error a la hora de modificar la inscripcion",
