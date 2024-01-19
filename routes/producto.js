@@ -4,6 +4,8 @@ import { validateToken } from "../middleware/validate-token.js";
 
 export const productoRouter = Router();
 
+//url/producto?ord=ASC --> Ordenar de forma ascendente
+//url/producto?ord=DESC --> Ordenar de forma descendente
 productoRouter.get("/", productoController.getAll);
 
 productoRouter.get("/:id", productoController.getById);

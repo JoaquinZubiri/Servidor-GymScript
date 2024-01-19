@@ -7,7 +7,15 @@ import {
 export class productoController {
   static async getAll(req, res) {
     try {
-      const producto = await productoModel.findAll();
+      const ord = req.query.ord;
+      let producto = null;
+      if (ord) {
+        producto = await productoModel.findAll({
+          order: [["nombre", ord.toUpperCase()]],
+        });
+      } else {
+        producto = await productoModel.findAll();
+      }
       if (producto.length === 0) {
         res.status(404).json({ error: "No se encontraron productos" });
       } else {
