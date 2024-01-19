@@ -16,6 +16,7 @@ import { horarioRouter } from "./routes/horario.js";
 import { validateToken } from "./middleware/validate-token.js";
 // import { configDotenv } from "dotenv";
 import "dotenv/config";
+const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(cors()); //Middleware para permitir el acceso a la API desde cualquier origen
@@ -42,6 +43,6 @@ app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });
 });
 
-app.listen("1234", () => {
-  console.log("Servidor escuchando en https://servidordsw.onrender.com:");
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
