@@ -12,11 +12,15 @@ Trabajo Practico de Desarrollo de Software UTN FRRO
 - [**FrontEnd**](https://github.com/fraancosan/gymScriptFE)
 - [**BackEnd (Actual)**](https://github.com/JoaquinZubiri/ServidorDSW)
 
+## EndPoints del servidor
+https://docs.google.com/document/d/1EIHSZ4md7HtXjbQpvfdjq-4wYMR6JP4S_Y3CCAhQ2Oo/edit?usp=sharing 
+
 ## Visualizacion del proyecto
 
 [**Pagina Web**](https://francosanchez.me/gymScriptFE/home)
 
 [**Video Demostracion**](https://youtu.be/uJMpIO53Nyk)
+
 
 ### Nota
 Es posible que los datos provenientes de la BD tarden en cargarse, esto se debe dado a que luego de un periodo de inactividad esta misma entra en estado de hibernacion y cuando se le realiza una consulta debe volver a activarse.
@@ -28,7 +32,7 @@ Este proyecto se encuentra ejecutandose en:  [**https://servidordsw.onrender.com
 - Instalar Dependencias: npm install
 - Ejecutar Servidor
   - En consola escribir: node app.js
-  - El servidor se creara en: http://localhost:1234/
+  - El servidor se creara en: http://localhost:3000/
 
 ## Descripción de Negocio
 El gimnasio **“gymScript”** es un establecimiento dedicado a acompañar a sus miembros a conseguir una buena salud física y mental, mediante una gran variedad de servicios y actividades. El gimnasio ofrece diferentes planes de membresías que se adaptan a las necesidades y preferencias de los clientes.
