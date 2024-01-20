@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: b84l754fxnnbzxvu6l1f-mysql.services.clever-cloud.com    Database: b84l754fxnnbzxvu6l1f
 -- ------------------------------------------------------
@@ -21,7 +21,7 @@ SET @@SESSION.SQL_LOG_BIN= 0;
 -- GTID state at the beginning of the backup 
 --
 
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f41d366d-91e5-11e9-8525-cecd028ee826:1-134807431';
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ 'f41d366d-91e5-11e9-8525-cecd028ee826:1-136855179';
 
 --
 -- Table structure for table `actividad`
@@ -93,7 +93,7 @@ CREATE TABLE `cuota` (
   PRIMARY KEY (`id`),
   KEY `fk_insc_couta_idx` (`idInscripcion`),
   CONSTRAINT `fk_insc_couta` FOREIGN KEY (`idInscripcion`) REFERENCES `inscripcion` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +102,7 @@ CREATE TABLE `cuota` (
 
 LOCK TABLES `cuota` WRITE;
 /*!40000 ALTER TABLE `cuota` DISABLE KEYS */;
-INSERT INTO `cuota` VALUES ('2023-11-19',12000,'2023-12-19',109,100),('2023-11-19',12000,'2023-12-19',110,101),('2023-11-20',6000,'2023-12-20',111,102),('2023-11-20',8000,'2023-12-20',112,103);
+INSERT INTO `cuota` VALUES ('2023-11-19',12000,'2023-12-19',109,100),('2023-11-19',12000,'2023-12-19',110,101),('2023-11-20',6000,'2023-12-20',111,102),('2023-11-20',8000,'2023-12-20',112,103),('2023-11-29',12000,'2023-12-29',113,104),('2023-12-03',8000,'2024-01-02',114,105),('2024-01-17',8000,'2024-02-16',115,103);
 /*!40000 ALTER TABLE `cuota` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,15 +140,15 @@ DROP TABLE IF EXISTS `horario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `horario` (
-  `horaDia` datetime NOT NULL,
-  `duracion` time NOT NULL,
+  `horaDesde` time NOT NULL,
+  `horaHasta` time NOT NULL,
   `idSedeAct` int(11) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dia` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `horaDia_UNIQUE` (`horaDia`),
-  UNIQUE KEY `idSedeAct_UNIQUE` (`idSedeAct`),
+  UNIQUE KEY `dia-hora-idSedeAct_UNIQUE` (`idSedeAct`,`dia`,`horaDesde`),
   CONSTRAINT `fk_sa_h` FOREIGN KEY (`idSedeAct`) REFERENCES `sedes_actividades` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +157,7 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+INSERT INTO `horario` VALUES ('13:00:00','14:00:00',1,2,'martes'),('20:00:00','21:00:00',1,7,'martes'),('19:00:00','20:30:00',1,8,'jueves');
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ CREATE TABLE `inscripcion` (
   CONSTRAINT `fk_plan-Insc` FOREIGN KEY (`idPlan`) REFERENCES `plan` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_sede_insc` FOREIGN KEY (`idSede`) REFERENCES `sede` (`id`),
   CONSTRAINT `fk_usuario_insc` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +191,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
-INSERT INTO `inscripcion` VALUES (9,'2023-11-19','2023-11-19',9,100,34),(9,'2023-11-19',NULL,8,101,34),(4,'2023-11-20','2023-11-20',6,102,35),(10,'2023-11-20',NULL,6,103,36);
+INSERT INTO `inscripcion` VALUES (9,'2023-11-19','2023-11-19',9,100,34),(9,'2023-11-19',NULL,8,101,34),(4,'2023-11-20','2023-11-20',6,102,35),(10,'2023-11-20',NULL,6,103,36),(9,'2023-11-29',NULL,9,104,37),(10,'2023-12-03',NULL,8,105,39);
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +266,7 @@ CREATE TABLE `plan-actividad` (
   KEY `fk_act_pa_idx` (`idActividad`),
   CONSTRAINT `fk_act_pa` FOREIGN KEY (`idActividad`) REFERENCES `actividad` (`id`),
   CONSTRAINT `fk_plan_pa` FOREIGN KEY (`idPlan`) REFERENCES `plan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +302,7 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 /*!40000 ALTER TABLE `producto` DISABLE KEYS */;
-INSERT INTO `producto` VALUES (5,'RedBull','Bebida energetica','Bebidas','https://images.ctfassets.net/lcr8qbvxj7mh/eyz1nHwgaDd9TKO6jslKD/1964dc02d78dc20fe267d864d5fabe14/DRES_AR_ED-250ml_cold_closed_front_redbullcom.png'),(6,'Whey Protein','Suplemento dietario','Suplementos','https://c0.klipartz.com/pngpicture/403/33/gratis-png-suplemento-dietetico-proteina-de-suero-dymatize-elite-100-whey-dymatize-elite-whey-5lbs-whey.png'),(7,'Mancuernas','Mancuernas hexagonales (55kg)','Equipamiento','https://c0.klipartz.com/pngpicture/293/83/gratis-png-par-de-pesas-de-gimnasia-de-peso-fijo-55-negras-entrenamiento-con-pesas-con-pesas-kettlebell-aptitud-fisica-archivo-de-pesas.png'),(8,'Bolso deportivo','Bolsillos Unisex Rbc Hombre','Ropa y Accesorios','https://http2.mlstatic.com/D_NQ_NP_972259-MLA53003316466_122022-O.webp'),(9,'Remera Fit Deportiva','Running Ciclista Camiseta Hombre','Ropa y Accesorios','https://http2.mlstatic.com/D_NQ_NP_640708-MLA54868405014_042023-O.webp'),(11,'Guantes Proyec','Extreme Gym Cuero Pesas Funcional','Equipamiento','https://http2.mlstatic.com/D_NQ_NP_793678-MLA71262035990_082023-O.webp'),(15,'Kit de bandas circulares','3 bandas circulares de latex, una por tensión','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/banda-circular-3-tensiones.jpg?fit=635%2C749&ssl=1'),(16,'SuperBanda para dominadas','Resistencia BAJA – Roja -2000 x 13 x 4.5mm','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/15679540398723ad9972eddce814d01e590ef0b2f5-3.jpg?fit=1002%2C1024&ssl=1'),(17,'Banda elástica con tobillera','Posee agarres regulables para los tobillos','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/2289.jpg?fit=800%2C800&ssl=1'),(18,'Guantes De Gimnasio','Son de cuero Mir','Ropa y Accesorios','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/Guantes-de-Cuero-Negro.jpg?fit=1080%2C1250&ssl=1'),(19,'Botella Deportiva','600ml - Pico anti derrames','Ropa y Accesorios','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/Kinemed-d3-Tape-Botellas-2.jpg?fit=1200%2C1200&ssl=1'),(20,'Balanza','Ideal para tu casa','Balanzas','https://todoparacasa.com.ar/control/archivos/6a4457_2WhatsAppImage2022-03-17at8.09.48PM(1).jpeg');
+INSERT INTO `producto` VALUES (5,'RedBull','Bebida energetica','Bebidas','https://images.ctfassets.net/lcr8qbvxj7mh/eyz1nHwgaDd9TKO6jslKD/1964dc02d78dc20fe267d864d5fabe14/DRES_AR_ED-250ml_cold_closed_front_redbullcom.png'),(6,'Whey Protein','Suplemento dietario','Suplementos','https://c0.klipartz.com/pngpicture/403/33/gratis-png-suplemento-dietetico-proteina-de-suero-dymatize-elite-100-whey-dymatize-elite-whey-5lbs-whey.png'),(7,'Mancuernas','Mancuernas hexagonales (55kg)','Equipamiento','https://c0.klipartz.com/pngpicture/293/83/gratis-png-par-de-pesas-de-gimnasia-de-peso-fijo-55-negras-entrenamiento-con-pesas-con-pesas-kettlebell-aptitud-fisica-archivo-de-pesas.png'),(8,'Bolso deportivo','Bolsillos Unisex Rbc Hombre','Ropa y Accesorios','https://http2.mlstatic.com/D_NQ_NP_972259-MLA53003316466_122022-O.webp'),(9,'Remera Fit Deportiva','Running Ciclista Camiseta Hombre','Ropa y Accesorios','https://http2.mlstatic.com/D_NQ_NP_640708-MLA54868405014_042023-O.webp'),(15,'Kit de bandas circulares','3 bandas circulares de latex, una por tensión','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/banda-circular-3-tensiones.jpg?fit=635%2C749&ssl=1'),(16,'SuperBanda para dominadas','Resistencia BAJA – Roja -2000 x 13 x 4.5mm','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/15679540398723ad9972eddce814d01e590ef0b2f5-3.jpg?fit=1002%2C1024&ssl=1'),(17,'Banda elástica con tobillera','Posee agarres regulables para los tobillos','Equipamiento','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/2289.jpg?fit=800%2C800&ssl=1'),(18,'Guantes De Gimnasio','Son de cuero Mir','Ropa y Accesorios','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/Guantes-de-Cuero-Negro.jpg?fit=1080%2C1250&ssl=1'),(19,'Botella Deportiva','600ml - Pico anti derrames','Ropa y Accesorios','https://i0.wp.com/kine-shop.com.ar/wp-content/uploads/2022/06/Kinemed-d3-Tape-Botellas-2.jpg?fit=1200%2C1200&ssl=1'),(20,'Balanza','Ideal para tu casa','Balanzas','https://todoparacasa.com.ar/control/archivos/6a4457_2WhatsAppImage2022-03-17at8.09.48PM(1).jpeg');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,31 +329,6 @@ LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
 INSERT INTO `provincia` VALUES (113,'Buenos Aires'),(134,'Catamarca'),(132,'Cordoba'),(136,'La Pampa'),(137,'La Rioja'),(135,'San Luis'),(131,'Santa Fe');
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `salon`
---
-
-DROP TABLE IF EXISTS `salon`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `salon` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(60) NOT NULL,
-  `capacidad` int(11) NOT NULL,
-  `nroSalon` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `salon`
---
-
-LOCK TABLES `salon` WRITE;
-/*!40000 ALTER TABLE `salon` DISABLE KEYS */;
-/*!40000 ALTER TABLE `salon` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -420,16 +396,14 @@ DROP TABLE IF EXISTS `sedes_actividades`;
 CREATE TABLE `sedes_actividades` (
   `idSede` int(11) NOT NULL,
   `idActividad` int(11) NOT NULL,
-  `idSalon` int(11) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idSede-idActividad_UNIQUE` (`idSede`,`idActividad`),
   KEY `fk_act-sa_idx` (`idActividad`),
   KEY `fk_sede_sa_idx` (`idSede`),
-  KEY `fk_salon_sa_idx` (`idSalon`),
   CONSTRAINT `fk_act_sa` FOREIGN KEY (`idActividad`) REFERENCES `actividad` (`id`),
-  CONSTRAINT `fk_salon_sa` FOREIGN KEY (`idSalon`) REFERENCES `salon` (`id`),
   CONSTRAINT `fk_sede_sa` FOREIGN KEY (`idSede`) REFERENCES `sede` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,6 +412,7 @@ CREATE TABLE `sedes_actividades` (
 
 LOCK TABLES `sedes_actividades` WRITE;
 /*!40000 ALTER TABLE `sedes_actividades` DISABLE KEYS */;
+INSERT INTO `sedes_actividades` VALUES (6,35,1),(8,35,4);
 /*!40000 ALTER TABLE `sedes_actividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -459,7 +434,7 @@ CREATE TABLE `usuario` (
   `rol` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `mailCli_UNIQUE` (`mail`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -468,7 +443,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (12313,'Rodrigo','Gimenez',99999999,'mail@gmail.com',11,'$2b$10$Nn2NqPAC2kdkdksJ3NHifKPZRa/.YUmsjnbtgZBHcOeO5GXWJTGLpQ6i/eC','user'),(123313,'Administrador','Prueba',11212313,'a@a.com',16,'$2b$10$71HEFjgIOoIv/2GuFDmQ3.Yifj4B5m1bvf4B39jc19H7.pjIUnxe2','admin'),(5545421,'Franco','Sanchez',8419212,'b@b.com',19,'$2b$10$hRF4Pwg7uaRz9deu/h.8pewkkoEsfArD8VKb5AgKmciD2JRXGmthG','user'),(2149237,'Roberto','Martinez',328491,'robertoMartinez@gmail.com',24,'$2b$10$nUTwzEIKw.8DGFEFiEnOk.0lPw/8ViFsnWPwUOVwF8qXYyFVZ9lo2','user'),(1000000,'Manuel','Mongelos',3121213,'manumong@gmail.com',25,'$2b$10$Dp8EaZcxXbbdt8UlzZYAGOxtF8EmRMTQAGmdU/e4UNTdntfpXoNA6','user'),(89114112,'aeasae','asas',199121,'onaeonae@gonaoms.com',27,'$2b$10$VPh5IQOqGRn.lkHMqJlN0eo0cFiuXzHlFeA/wF/Al.xEB0igVW2jC','user'),(12345672,'Franco','Sanchez',341648152,'soporte@francosanchez.com.ar',30,'$2b$10$qUdgMm3B2IWT3OzD45xwD.pUeR862tB63f.093XXCQaGMuLWhJHVO','admin'),(919529,'Franco','Sanchez',6146412,'aa@aa.com',34,'$2b$10$MWuBQS6nA0HUH3hV.UutbeCf692GS1QdhXTOE6zB8u/JLHdoAdpfu','user'),(43242343,'augusto','castellano',221432523,'augustocas05@hotmail.com',35,'$2b$10$OrZgRG9MAJdsP2rQtCaCauZVY.vRdSkXcY7zmUpe1JRmhLn/Gd/Yq','user'),(44111222,'Joaquin','Zubiri',24773020,'j@z.com',36,'$2b$10$2K4YP43na/mA0JHXA9fBr.sDWyyhRaAtC.qiPazoO6xo9cYOY/4W.','user'),(121313,'Nicolas','Fani',121212,'aeonae@onma.com',37,'$2b$10$Ygqr7LKNX.TqeEfzovxGEOgyFQR1C/Kk2hQvQzZP9BiMUVWxKOuZi','user'),(1213123,'Gino','Fina',121212,'asmoasm@onae.com',38,'$2b$10$4bOSCvT1KDDA9FVCRlZWeOJEDTf1u.7MPfkLYbJ.oXc5iiraGfB8C','user');
+INSERT INTO `usuario` VALUES (12313,'Rodrigo','Gimenez',99999999,'mail@gmail.com',11,'$2b$10$Nn2NqPAC2kdkdksJ3NHifKPZRa/.YUmsjnbtgZBHcOeO5GXWJTGLpQ6i/eC','user'),(123313,'Administrador','Prueba',11212313,'a@a.com',16,'$2b$10$71HEFjgIOoIv/2GuFDmQ3.Yifj4B5m1bvf4B39jc19H7.pjIUnxe2','admin'),(5545421,'Franco','Sanchez',8419212,'b@b.com',19,'$2b$10$hRF4Pwg7uaRz9deu/h.8pewkkoEsfArD8VKb5AgKmciD2JRXGmthG','user'),(2149237,'Roberto','Martinez',328491,'robertoMartinez@gmail.com',24,'$2b$10$nUTwzEIKw.8DGFEFiEnOk.0lPw/8ViFsnWPwUOVwF8qXYyFVZ9lo2','user'),(1000000,'Manuel','Mongelos',3121213,'manumong@gmail.com',25,'$2b$10$Dp8EaZcxXbbdt8UlzZYAGOxtF8EmRMTQAGmdU/e4UNTdntfpXoNA6','user'),(89114112,'aeasae','asas',199121,'onaeonae@gonaoms.com',27,'$2b$10$VPh5IQOqGRn.lkHMqJlN0eo0cFiuXzHlFeA/wF/Al.xEB0igVW2jC','user'),(12345672,'Franco','Sanchez',341648152,'soporte@francosanchez.com.ar',30,'$2b$10$qUdgMm3B2IWT3OzD45xwD.pUeR862tB63f.093XXCQaGMuLWhJHVO','admin'),(919529,'Franco','Sanchez',6146412,'aa@aa.com',34,'$2b$10$MWuBQS6nA0HUH3hV.UutbeCf692GS1QdhXTOE6zB8u/JLHdoAdpfu','user'),(43242343,'augusto','castellano',221432523,'augustocas05@hotmail.com',35,'$2b$10$OrZgRG9MAJdsP2rQtCaCauZVY.vRdSkXcY7zmUpe1JRmhLn/Gd/Yq','user'),(44111222,'Joaquin','Zubiri',24773020,'j@z.com',36,'$2b$10$TqfT6aqb8pvNFj/9W5rj9uVkxj7vVbpqnbB8D3FdYPZJgrphrqXge','user'),(121313,'Nicolas','Fani',121212,'aeonae@onma.com',37,'$2b$10$Ygqr7LKNX.TqeEfzovxGEOgyFQR1C/Kk2hQvQzZP9BiMUVWxKOuZi','user'),(1213123,'Gino','Fina',121212,'asmoasm@onae.com',38,'$2b$10$4bOSCvT1KDDA9FVCRlZWeOJEDTf1u.7MPfkLYbJ.oXc5iiraGfB8C','user'),(1212,'waw','awaw',121213,'hola@hola.com',39,'$2b$10$uPEuYyfWbdwMwmX6hTtKtew6a5y0lwSChZDibLSIFtuHzOcZI59M6','user');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
@@ -482,4 +457,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-21 15:28:58
+-- Dump completed on 2024-01-19 21:50:46
