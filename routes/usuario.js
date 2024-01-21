@@ -11,7 +11,7 @@ usuarioRouter.get("/", validateToken, usuarioController.getAll);
 
 usuarioRouter.get("/:id", validateToken, usuarioController.getById);
 
-usuarioRouter.post("/", validateToken, usuarioController.create);
+usuarioRouter.post("/", usuarioController.create);
 
 usuarioRouter.patch("/:id", validateToken, usuarioController.update);
 
