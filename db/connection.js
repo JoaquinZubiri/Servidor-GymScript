@@ -10,6 +10,7 @@ const db = new Sequelize(
     host: process.env.HOSTDB,
     port: 3306,
     dialect: "mysql",
+    logging: false,
   },
 );
 

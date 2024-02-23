@@ -1,4 +1,4 @@
-import z from 'zod';
+import z from "zod";
 
 const productoSchema = z.object({
   nombre: z.string().min(1),
