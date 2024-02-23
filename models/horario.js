@@ -23,7 +23,7 @@ export const horarioModel = db.define(
       allowNull: false,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );
 
 export async function validateHorarioRepetido(result, horario) {
@@ -43,7 +43,7 @@ export async function validateHorarioRepetido(result, horario) {
       {
         replacements: replacements,
         type: QueryTypes.SELECT,
-      }
+      },
     );
   } else {
     return await db.query(
@@ -51,7 +51,7 @@ export async function validateHorarioRepetido(result, horario) {
       {
         replacements: [idSedeAct, dia, hHasta, hDesde],
         type: QueryTypes.SELECT,
-      }
+      },
     );
   }
 }

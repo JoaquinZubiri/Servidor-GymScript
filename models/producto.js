@@ -21,5 +21,5 @@ export const productoModel = db.define(
       allowNull: true,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );

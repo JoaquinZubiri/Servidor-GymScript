@@ -34,5 +34,5 @@ export const usuarioModel = db.define(
       allowNull: false,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );

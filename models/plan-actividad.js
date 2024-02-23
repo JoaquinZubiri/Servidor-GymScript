@@ -16,7 +16,7 @@ export const planActividadModel = db.define(
       allowNull: false,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );
 
 // Relaciones

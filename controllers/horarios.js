@@ -123,7 +123,7 @@ export class horarioController {
             //VALIDAR QUE LOS HORARIOS SEAN COHERENTES
             const horarioRepetido = await validateHorarioRepetido(
               result.data,
-              horario
+              horario,
             );
             if (horarioRepetido.length > 0) {
               res.status(400).json({
@@ -175,8 +175,8 @@ function validateTime(hDesde, hHasta, horario) {
   return hDesde && hHasta
     ? hDesde < hHasta
     : hDesde
-    ? hDesde < horario.horaHasta
-    : hHasta
-    ? horario.horaDesde < hHasta
-    : true;
+      ? hDesde < horario.horaHasta
+      : hHasta
+        ? horario.horaDesde < hHasta
+        : true;
 }

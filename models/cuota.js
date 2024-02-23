@@ -23,7 +23,7 @@ export const cuotaModel = db.define(
       allowNull: true,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );
 
 // Relaciones

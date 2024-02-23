@@ -32,7 +32,7 @@ export class inscripcionController {
         idPlan,
         idSede,
         fechaBaja,
-        couta
+        couta,
       );
 
       if (inscripciones.length === 0) {
@@ -196,7 +196,7 @@ export class inscripcionController {
     } catch (error) {
       if (
         error.message.includes(
-          "Cannot delete or update a parent row: a foreign key constraint fails"
+          "Cannot delete or update a parent row: a foreign key constraint fails",
         )
       ) {
         res.status(400).json({
@@ -233,7 +233,7 @@ async function parametrosQueryGetAll(
   idPlan,
   idSede,
   fechaBaja,
-  cuota
+  cuota,
 ) {
   try {
     // Validamos cuales fueron los parametros que se enviaron y armamos la query a la BD dependiendo de esto.

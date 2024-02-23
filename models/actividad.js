@@ -13,5 +13,5 @@ export const actividadModel = db.define(
       allowNull: false,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );

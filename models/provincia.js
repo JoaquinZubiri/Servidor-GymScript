@@ -10,5 +10,5 @@ export const provinciaModel = db.define(
       unique: true,
     },
   },
-  { freezeTableName: true, timestamps: false }
+  { freezeTableName: true, timestamps: false },
 );

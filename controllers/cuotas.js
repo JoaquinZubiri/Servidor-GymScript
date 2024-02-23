@@ -2,7 +2,11 @@ import { cuotaModel } from "../models/cuota.js";
 import { inscripcionModel } from "../models/inscripcion.js";
 import { planModel } from "../models/plan.js";
 
-import { validateCuota, validateParcialCuota, validateCuotaUpdate } from "../Schemas/cuota.js";
+import {
+  validateCuota,
+  validateParcialCuota,
+  validateCuotaUpdate,
+} from "../Schemas/cuota.js";
 
 export class cuotaController {
   static async getAll(req, res) {
@@ -109,7 +113,7 @@ export class cuotaController {
               as: "plan",
               attributes: ["precioMensual"],
             },
-          }
+          },
         );
         // Valida que exista y que no este vencida
         if (insc == null || insc.fechaBaja !== null) {

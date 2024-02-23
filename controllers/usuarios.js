@@ -105,7 +105,7 @@ export class usuarioController {
           if (result.data.contraseña) {
             result.data.contraseña = await bcrypt.hash(
               result.data.contraseña,
-              10
+              10,
             );
           }
           await usuarioModel.update(result.data, {
@@ -170,7 +170,7 @@ export class usuarioController {
                 rol: usuario.rol,
               },
               process.env.SECRET_KEY || "passwordJWT",
-              { expiresIn: "1h" }
+              { expiresIn: "1h" },
             );
             res.json(token);
           }

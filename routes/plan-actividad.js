@@ -15,11 +15,11 @@ planActividadRouter.post("/", validateToken, planActividadController.create);
 planActividadRouter.patch(
   "/:id",
   validateToken,
-  planActividadController.update
+  planActividadController.update,
 );
 
 planActividadRouter.delete(
   "/:id",
   validateToken,
-  planActividadController.delete
+  planActividadController.delete,
 );

@@ -12,7 +12,7 @@ export const validateToken = (req, res, next) => {
         // verificamos el token con la clave secreta
         const payload = jwt.verify(
           token_number,
-          process.env.SECRET_KEY || "passwordJWT"
+          process.env.SECRET_KEY || "passwordJWT",
         );
         req.payload = payload;
         next();
