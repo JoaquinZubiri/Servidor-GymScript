@@ -91,6 +91,14 @@ export class productoController {
         if (!prod) {
           res.status(400).json({ msg: 'No existe el producto a actualizar' });
         } else {
+          if (req.file) {
+            deleteImages(prod.img);
+            const name = await replaceImage(req.file.filename);
+            await sizeImage(name, '-small', 250);
+            await sizeImage(name, '-medium', 500);
+            await sizeImage(name, '-large', 1000);
+            result.data.img = '/img/' + name;
+          }
           await productoModel.update(result.data, {
             where: { id: req.params.id },
           });

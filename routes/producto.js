@@ -18,6 +18,11 @@ productoRouter.post(
   productoController.create
 );
 
-productoRouter.patch('/:id', validateToken, productoController.update);
+productoRouter.patch(
+  '/:id',
+  validateToken,
+  imgUpload.single('file'),
+  productoController.update
+);
 
 productoRouter.delete('/:id', validateToken, productoController.delete);
