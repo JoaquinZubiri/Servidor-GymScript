@@ -1,10 +1,9 @@
-import z from "zod";
+import z from 'zod';
 
 const productoSchema = z.object({
   nombre: z.string().min(1),
   descripcion: z.string().min(1),
   tipo: z.string().min(1),
-  img: z.string().optional(),
 });
 
 export function validateProducto(object) {
