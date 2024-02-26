@@ -12,6 +12,7 @@ import { planActividadRouter } from "./routes/plan-actividad.js";
 import { coutaRouter } from "./routes/cuota.js";
 import { sedeActividadRouter } from "./routes/sede-actividad.js";
 import { horarioRouter } from "./routes/horario.js";
+import { entrenadorRouter } from "./routes/entrenador.js";
 
 import { validateToken } from "./middleware/validate-token.js";
 // import { configDotenv } from "dotenv";
@@ -33,6 +34,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/sede-actividades", sedeActividadRouter);
 app.use("/", validateToken);
 app.use("/horarios", horarioRouter);
+app.use("/entrenadores", entrenadorRouter);
 app.use("/provincias", provinciaRouter);
 app.use("/localidades", localidadRouter);
 app.use("/sedes", sedeRouter);
