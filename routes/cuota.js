@@ -12,7 +12,7 @@ cuotaRouter.get("/", cuotaController.getAll);
 
 cuotaRouter.get("/:id", cuotaController.getById);
 
-
+cuotaRouter.get("/vencimiento/:id", cuotaController.getStateCuota);
 
 cuotaRouter.patch("/:id", cuotaController.update);
 
