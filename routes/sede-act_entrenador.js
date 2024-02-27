@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { SedeActEntrenadorController } from "../controllers/sede-act_entrenador";
+import { sedeActEntrenadorController } from "../controllers/sede-act_entrenadores.js";
 
 export const sedeActEntrenadorRouter = Router();
 
-sedeActEntrenadorRouter.get("/", SedeActEntrenadorController.getAll);
+sedeActEntrenadorRouter.get("/", sedeActEntrenadorController.getAll);
 
-sedeActEntrenadorRouter.get("/:id", SedeActEntrenadorController.getById);
+sedeActEntrenadorRouter.get("/:id", sedeActEntrenadorController.getById);
 
-sedeActEntrenadorRouter.post("/", SedeActEntrenadorController.create);
+sedeActEntrenadorRouter.post("/", sedeActEntrenadorController.create);
 
-sedeActEntrenadorRouter.patch("/:id", SedeActEntrenadorController.update);
+sedeActEntrenadorRouter.patch("/:id", sedeActEntrenadorController.update);
 
-sedeActEntrenadorRouter.delete("/:id", SedeActEntrenadorController.delete);
+sedeActEntrenadorRouter.delete("/:id", sedeActEntrenadorController.delete);
 

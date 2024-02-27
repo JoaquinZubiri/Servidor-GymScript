@@ -5,7 +5,7 @@ import { entrenadorModel } from "./entrenador.js";
 import { sedeActividadModel } from "./sede-actividad.js";
 
 export const sedeActEntrenadorModel = db.define(
-    "sedes_entrenadores",
+    "sede-act_entrenadores",
     {
         idSedeAct: {
         type: DataTypes.INTEGER,

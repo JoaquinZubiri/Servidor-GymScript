@@ -1,7 +1,7 @@
 import z from "zod";
 
 const sedeActEntrenadoresSchema = z.object({
-    idSede: z.number(),
+    idSedeAct: z.number(),
     idEntrenador: z.number(),
     });
 
