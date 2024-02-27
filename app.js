@@ -9,9 +9,11 @@ import { sedeRouter } from "./routes/sede.js";
 import { inscripcionRouter } from "./routes/inscripcion.js";
 import { actividadRouter } from "./routes/actividad.js";
 import { planActividadRouter } from "./routes/plan-actividad.js";
-import { coutaRouter } from "./routes/cuota.js";
+import { cuotaRouter } from "./routes/cuota.js";
 import { sedeActividadRouter } from "./routes/sede-actividad.js";
 import { horarioRouter } from "./routes/horario.js";
+import { entrenadorRouter } from "./routes/entrenador.js";
+import { sedeActEntrenadorRouter } from "./routes/sede-act_entrenador.js";
 
 import { validateToken } from "./middleware/validate-token.js";
 // import { configDotenv } from "dotenv";
@@ -31,6 +33,8 @@ app.use("/planes", planRouter);
 app.use("/plan-actividades", planActividadRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/sede-actividades", sedeActividadRouter);
+app.use("/entrenadores", entrenadorRouter);
+app.use("/sede-act-entrenadores", sedeActEntrenadorRouter);
 app.use("/", validateToken);
 app.use("/horarios", horarioRouter);
 app.use("/provincias", provinciaRouter);
@@ -38,7 +42,7 @@ app.use("/localidades", localidadRouter);
 app.use("/sedes", sedeRouter);
 app.use("/inscripciones", inscripcionRouter);
 app.use("/actividades", actividadRouter);
-app.use("/cuotas", coutaRouter);
+app.use("/cuotas", cuotaRouter);
 
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });

@@ -50,6 +50,23 @@ export class cuotaController {
     }
   }
 
+  static async getStateCuota(req, res) {
+    try {
+      const cuota = await cuotaModel.findByPk(req.params.id);
+      if (!cuota) {
+        res.status(404).json({ error: "Cuota no encontrada" });
+      } else {
+        const estado = (new Date(cuota.fechaVenc) < new Date());
+        res.json(estado);
+      }
+    } catch (error) {
+      res.status(500).json({
+        msg: "Ocurrio un error a la hora de obtener el estado de la cuota",
+        error: error.message,
+      });
+    }
+  }
+
   // Metodo Update sin restricciones (para testear)
   static async update(req, res) {
     try {
