@@ -9,7 +9,7 @@ import { sedeRouter } from "./routes/sede.js";
 import { inscripcionRouter } from "./routes/inscripcion.js";
 import { actividadRouter } from "./routes/actividad.js";
 import { planActividadRouter } from "./routes/plan-actividad.js";
-import { coutaRouter } from "./routes/cuota.js";
+import { cuotaRouter } from "./routes/cuota.js";
 import { sedeActividadRouter } from "./routes/sede-actividad.js";
 import { horarioRouter } from "./routes/horario.js";
 import { entrenadorRouter } from "./routes/entrenador.js";
@@ -42,7 +42,7 @@ app.use("/localidades", localidadRouter);
 app.use("/sedes", sedeRouter);
 app.use("/inscripciones", inscripcionRouter);
 app.use("/actividades", actividadRouter);
-app.use("/cuotas", coutaRouter);
+app.use("/cuotas", cuotaRouter);
 
 app.use((_, res) => {
   res.status(404).json({ error: "Recurso no encontrado" });
