@@ -52,11 +52,16 @@ export class cuotaController {
 
   static async getStateCuota(req, res) {
     try {
-      const cuota = await cuotaModel.findByPk(req.params.id);
+      const idInscripcion = req.params.id;
+      const cuota = await cuotaModel.findAll({
+        limit: 1,
+        order: [["fechaPago", "DESC"]],
+        where: { idInscripcion },
+      });
       if (!cuota) {
         res.status(404).json({ error: "Cuota no encontrada" });
       } else {
-        const estado = (new Date(cuota.fechaVenc) < new Date());
+        const estado = new Date(cuota[0].fechaVenc) < new Date();
         res.json(estado);
       }
     } catch (error) {
@@ -130,7 +135,7 @@ export class cuotaController {
               as: "plan",
               attributes: ["precioMensual"],
             },
-          },
+          }
         );
         // Valida que exista y que no este vencida
         if (insc == null || insc.fechaBaja !== null) {

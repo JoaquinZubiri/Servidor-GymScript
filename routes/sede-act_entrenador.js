@@ -12,4 +12,3 @@ sedeActEntrenadorRouter.post("/", sedeActEntrenadorController.create);
 sedeActEntrenadorRouter.patch("/:id", sedeActEntrenadorController.update);
 
 sedeActEntrenadorRouter.delete("/:id", sedeActEntrenadorController.delete);
-
