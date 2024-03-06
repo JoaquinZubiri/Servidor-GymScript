@@ -10,6 +10,8 @@ horarioRouter.get("/:id", horarioController.getById);
 
 horarioRouter.post("/", horarioController.create);
 
+horarioRouter.post("/actividades-user", horarioController.getByActividadesUser);
+
 horarioRouter.patch("/:id", horarioController.update);
 
 horarioRouter.delete("/:id", horarioController.delete);

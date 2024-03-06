@@ -12,6 +12,7 @@ cuotaRouter.get("/", cuotaController.getAll);
 
 cuotaRouter.get("/:id", cuotaController.getById);
 
+//Devuelve el estado de la cuota (true si esta vencida, false si no)
 cuotaRouter.get("/vencimiento/:id", cuotaController.getStateCuota);
 
 cuotaRouter.patch("/:id", cuotaController.update);
