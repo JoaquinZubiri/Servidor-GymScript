@@ -5,6 +5,15 @@ import { validateSedes, validateParcialSedes } from "../Schemas/sedes.js";
 export class sedeController {
   static async getAll(req, res) {
     try {
+    const idLocalidad = req.query.idLocalidad;
+    if(idLocalidad){
+      const sede = await sedeModel.findAll({where: { idLocalidad: idLocalidad }});
+      if(sede.length === 0){
+        res.status(404).json({ msg: "No se encontraron sedes vinculadas a esta localidad" });
+      }else{
+        res.json(sede);
+        }
+    }else{
       const sede = await sedeModel.findAll({
         include: {
           model: localidadModel,
@@ -17,6 +26,7 @@ export class sedeController {
       } else {
         res.json(sede);
       }
+    }  
     } catch (error) {
       res.status(500).json({
         msg: "Ocurrio un error a la hora de obtener las sedes",
