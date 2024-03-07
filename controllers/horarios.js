@@ -8,8 +8,22 @@ export class horarioController {
   static async getAll(req, res) {
     try {
       const idSedeAct = req.query.idSedeAct;
+      const idActividad = req.query.idActividad;
+      const idSede = req.query.idSede;
       let horario = [];
-      if (idSedeAct) {
+      if (idActividad && idSede) {
+        horario = await horarioModel.findAll({
+          include: {
+            model: sedeActividadModel,
+            as: "sedes_actividades",
+            attributes: ["idSede", "idActividad"],
+            where: {
+              idActividad: idActividad,
+              idSede: idSede,
+            },
+          },
+        });
+      } else if(idSedeAct){
         horario = await horarioModel.findAll({
           where: { idSedeAct: idSedeAct },
           include: {

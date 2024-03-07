@@ -156,16 +156,12 @@ async function parametrosQueryGetAll(idPlan, idActividad) {
         where: {
           idPlan: idPlan,
         },
+        attributes: ["idActividad"],
         include: [
           {
             model: actividadModel,
             as: "actividad",
             attributes: ["id", "nombre", "descripcion"],
-          },
-          {
-            model: planModel,
-            as: "plan",
-            attributes: ["id", "nombre", "descripcion", "precioMensual"],
           },
         ],
       });
