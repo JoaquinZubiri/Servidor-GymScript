@@ -184,35 +184,6 @@ export class horarioController {
     }
   }
 
-  static async getByActividadesUser(req, res) {
-    try {
-      const actividades = req.body.actividades;
-      const idSede = req.body.idSede;
-      const horarios = await horarioModel.findAll({
-        include: {
-          model: sedeActividadModel,
-          as: "sedes_actividades",
-          attributes: ["idSede", "idActividad"],
-          where: {
-            idActividad: {
-              [Op.in]: actividades,
-            },
-            idSede: idSede,
-          },
-        },
-      });
-      if (horarios.length === 0) {
-        res.status(404).json({ msg: "No se encontraron horarios" });
-      } else {
-        res.json(horarios);
-      }
-    } catch (error) {
-      res.status(500).json({
-        msg: "Ocurrio un error a la hora de obtener los horarios",
-        error: error.message,
-      });
-    }
-  }
 }
 
 function validateTime(hDesde, hHasta, horario) {
