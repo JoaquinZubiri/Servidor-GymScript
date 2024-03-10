@@ -1,6 +1,6 @@
 import { horarioModel, validateHorarioRepetido } from "../models/horario.js";
 import { sedeActividadModel } from "../models/sede-actividad.js";
-import { QueryTypes, Op } from "sequelize";
+import { QueryTypes, Op, fn, col } from "sequelize";
 
 import { validateHorario, validateParcialHorario } from "../Schemas/horario.js";
 
@@ -11,8 +11,33 @@ export class horarioController {
       const idActividad = req.query.idActividad;
       const idSede = req.query.idSede;
       let horario = [];
+      // select dia, group_concat(concat(horaDesde, "-", horaHasta)) as horarios from horario group by dia order by field(dia, 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo');
       if (idActividad && idSede) {
         horario = await horarioModel.findAll({
+          attributes: [
+            "dia",
+            [
+              fn(
+                "GROUP_CONCAT",
+                fn("CONCAT", col("horaDesde"), " - ", col("horaHasta"))
+              ),
+              "horario",
+            ],
+          ],
+          group: ["dia"],
+          order: [
+            fn(
+              "FIELD",
+              col("dia"),
+              "lunes",
+              "martes",
+              "miércoles",
+              "jueves",
+              "viernes",
+              "sábado",
+              "domingo"
+            ),
+          ],
           include: {
             model: sedeActividadModel,
             as: "sedes_actividades",
@@ -23,7 +48,7 @@ export class horarioController {
             },
           },
         });
-      } else if(idSedeAct){
+      } else if (idSedeAct) {
         horario = await horarioModel.findAll({
           where: { idSedeAct: idSedeAct },
           include: {
@@ -137,7 +162,7 @@ export class horarioController {
             //VALIDAR QUE LOS HORARIOS SEAN COHERENTES
             const horarioRepetido = await validateHorarioRepetido(
               result.data,
-              horario,
+              horario
             );
             if (horarioRepetido.length > 0) {
               res.status(400).json({
@@ -183,7 +208,6 @@ export class horarioController {
       });
     }
   }
-
 }
 
 function validateTime(hDesde, hHasta, horario) {
