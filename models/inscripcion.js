@@ -10,7 +10,7 @@ export const inscripcionModel = db.define(
   {
     idUsuario: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       unique: true,
     },
     idPlan: {
