@@ -33,7 +33,7 @@ export class inscripcionController {
         idPlan,
         idSede,
         fechaBaja,
-        couta,
+        couta
       );
 
       if (inscripciones.length === 0) {
@@ -144,21 +144,28 @@ export class inscripcionController {
     }
   }
 
-  static async unSubscribe(req, res){
-    try{
-      const inscripciones = await inscripcionModel.update({ idUsuario: null}, {
-        where: { idUsuario: req.params.id},});
-      if(inscripciones.length === 0){
-        res.status(404).json({ error: "No se encontraron inscripciones asociadas a este usuario"});
-      } else{
+  static async unSubscribe(req, res) {
+    try {
+      const inscripciones = await inscripcionModel.update(
+        { idUsuario: null, fechaBaja: new Date() },
+        {
+          where: { idUsuario: req.params.id },
+        }
+      );
+      if (inscripciones.length === 0) {
+        res.status(404).json({
+          error: "No se encontraron inscripciones asociadas a este usuario",
+        });
+      } else {
         res.status(200).json({ msg: "Inscripcion dada de baja" });
       }
-    }catch (error){
-      res.status(500).json({ msg: "Ocurrio un error a la hora de modificar la inscripcion",
-      error: error.message,});
+    } catch (error) {
+      res.status(500).json({
+        msg: "Ocurrio un error a la hora de modificar la inscripcion",
+        error: error.message,
+      });
     }
   }
-
 
   static async update(req, res) {
     try {
@@ -213,7 +220,7 @@ export class inscripcionController {
     } catch (error) {
       if (
         error.message.includes(
-          "Cannot delete or update a parent row: a foreign key constraint fails",
+          "Cannot delete or update a parent row: a foreign key constraint fails"
         )
       ) {
         res.status(400).json({
@@ -250,7 +257,7 @@ async function parametrosQueryGetAll(
   idPlan,
   idSede,
   fechaBaja,
-  cuota,
+  cuota
 ) {
   try {
     // Validamos cuales fueron los parametros que se enviaron y armamos la query a la BD dependiendo de esto.
