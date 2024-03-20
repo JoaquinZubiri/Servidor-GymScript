@@ -12,3 +12,5 @@ checkInRouter.post("/", checkInController.create);
 checkInRouter.patch("/:id", checkInController.update);
 
 checkInRouter.delete("/:id", checkInController.delete);
+
+checkInRouter.get("/accessControl/:id", checkInController.accessControl);

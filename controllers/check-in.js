@@ -129,4 +129,60 @@ export class checkInController {
       });
     }
   }
+
+  static async accessControl(req, res) {
+    try {
+      const dniUsuario = req.params.id;
+      const usuario = await usuarioModel.findOne({
+        where: { dni: dniUsuario },
+      });
+      if (!usuario) {
+        res.status(404).json({ error: "Usuario no encontrado" });
+      } else {
+        const inscripcion = await inscripcionModel.findOne({
+          where: { idUsuario: usuario.id, fechaBaja: null },
+          include: [
+            {
+              model: sedeModel,
+              as: "sede",
+              attributes: ["id", "direccion", "idLocalidad"],
+            },
+            {
+              model: cuotaModel,
+              as: "cuota",
+              attributes: ["id", "fechaPago", "importe", "fechaVenc"],
+              limit: 1,
+              order: [["fechaPago", "DESC"]],
+            },
+          ],
+        });
+        if (!inscripcion) {
+          res.status(404).json({ error: "No está inscripto" });
+        } else {
+          const estado = new Date(inscripcion.cuota.fechaVenc) < new Date();
+          if (estado) {
+            res.status(403).json({ error: "Cuota vencida" });
+          } else {
+            const checkIn = {
+              idUsuario: usuario.id,
+              idSede: inscripcion.sede.id,
+              fecha: new Date().toISOString().split("T")[0],
+              hora: new Date().toLocaleString().split(", ")[1],
+            };
+            await checkInModel.create(checkIn);
+            res.status(201).json({
+              estadoCuota: estado,
+              usuario: usuario,
+              inscripcion: inscripcion,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      res.status(500).json({
+        msg: "Ocurrio un error a la hora de realizar el check-in",
+        error: error.message,
+      });
+    }
+  }
 }
