@@ -144,29 +144,6 @@ export class inscripcionController {
     }
   }
 
-  static async unSubscribe(req, res) {
-    try {
-      const inscripciones = await inscripcionModel.update(
-        { idUsuario: null, fechaBaja: new Date() },
-        {
-          where: { idUsuario: req.params.id },
-        }
-      );
-      if (inscripciones.length === 0) {
-        res.status(404).json({
-          error: "No se encontraron inscripciones asociadas a este usuario",
-        });
-      } else {
-        res.status(200).json({ msg: "Inscripcion dada de baja" });
-      }
-    } catch (error) {
-      res.status(500).json({
-        msg: "Ocurrio un error a la hora de modificar la inscripcion",
-        error: error.message,
-      });
-    }
-  }
-
   static async update(req, res) {
     try {
       //validar que en body solo venga la fechaBaja
