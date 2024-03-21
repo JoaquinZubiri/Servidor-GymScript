@@ -137,7 +137,7 @@ export class checkInController {
         where: { dni: dniUsuario },
       });
       if (!usuario) {
-        res.status(404).json({ error: "Usuario no encontrado" });
+        res.status(404).json({ msg: "Usuario no encontrado" });
       } else {
         const inscripcion = await inscripcionModel.findOne({
           where: { idUsuario: usuario.id, fechaBaja: null },
@@ -157,11 +157,11 @@ export class checkInController {
           ],
         });
         if (!inscripcion) {
-          res.status(404).json({ error: "No está inscripto" });
+          res.status(404).json({ msg: "No está inscripto" });
         } else {
           const estado = new Date(inscripcion.cuota.fechaVenc) < new Date();
           if (estado) {
-            res.status(403).json({ error: "Cuota vencida" });
+            res.status(403).json({ msg: "Cuota vencida" });
           } else {
             const checkIn = {
               idUsuario: usuario.id,
