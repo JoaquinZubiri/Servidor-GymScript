@@ -1,14 +1,15 @@
-import { localidadController } from "../controllers/localidades.js";
-import { Router } from "express";
+import { localidadController } from '../controllers/localidades.js';
+import { Router } from 'express';
+import { authAdmin } from '../middleware/auth.js';
 
 export const localidadRouter = Router();
 
-localidadRouter.get("/", localidadController.getAll);
+localidadRouter.get('/', localidadController.getAll);
 
-localidadRouter.get("/:id", localidadController.getById);
+localidadRouter.get('/:id', localidadController.getById);
 
-localidadRouter.post("/", localidadController.create);
+localidadRouter.post('/', authAdmin, localidadController.create);
 
-localidadRouter.patch("/:id", localidadController.update);
+localidadRouter.patch('/:id', authAdmin, localidadController.update);
 
-localidadRouter.delete("/:id", localidadController.delete);
+localidadRouter.delete('/:id', authAdmin, localidadController.delete);

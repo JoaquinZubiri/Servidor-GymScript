@@ -1,5 +1,6 @@
-import { Router } from "express";
-import { inscripcionController } from "../controllers/inscripciones.js";
+import { Router } from 'express';
+import { inscripcionController } from '../controllers/inscripciones.js';
+import { authUser } from '../middleware/auth.js';
 
 export const inscripcionRouter = Router();
 
@@ -11,12 +12,13 @@ url/inscripciones?idUsuario=1&fechaBaja=null --> Devuelve todas las inscripcione
 url/inscripciones?fechaBaja=null --> Devuelve todas las inscripciones que estan activas(fechaBaja=null)
 url/inscripciones?cuota=true --> Devuelve todas las inscripciones con su ultima cuota
 */
-inscripcionRouter.get("/", inscripcionController.getAll);
+inscripcionRouter.get('/', authUser, inscripcionController.getAll);
 
-inscripcionRouter.get("/:id", inscripcionController.getById);
+inscripcionRouter.get('/:id', authUser, inscripcionController.getById);
 
-inscripcionRouter.post("/", inscripcionController.create);
+inscripcionRouter.post('/', authUser, inscripcionController.create);
 
-inscripcionRouter.patch("/:id", inscripcionController.update);
-
-inscripcionRouter.delete("/:id", inscripcionController.delete);
+// Quizas se deberia validar tambien que el usuario sea el dueño de la inscripcion
+inscripcionRouter.patch('/:id', authUser, inscripcionController.update);
+// Quizas se deberia validar tambien que el usuario sea el dueño de la inscripcion
+inscripcionRouter.delete('/:id', authUser, inscripcionController.delete);

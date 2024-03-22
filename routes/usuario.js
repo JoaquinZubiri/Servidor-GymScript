@@ -1,18 +1,18 @@
-import { Router } from "express";
-import { usuarioController } from "../controllers/usuarios.js";
-import { validateToken } from "../middleware/validate-token.js";
+import { Router } from 'express';
+import { usuarioController } from '../controllers/usuarios.js';
+import { authAdmin, authUser, onOwnAccount } from '../middleware/auth.js';
 
 export const usuarioRouter = Router();
 
-usuarioRouter.post("/loginUser", usuarioController.loginUser);
+usuarioRouter.post('/loginUser', usuarioController.loginUser);
 
 // url/usuarios?mail=mail --> Devuelve el usuario con ese mail
-usuarioRouter.get("/", validateToken, usuarioController.getAll);
+usuarioRouter.get('/', authAdmin, usuarioController.getAll);
 
-usuarioRouter.get("/:id", validateToken, usuarioController.getById);
+usuarioRouter.get('/:id', authUser, onOwnAccount, usuarioController.getById);
 
-usuarioRouter.post("/", usuarioController.create);
+usuarioRouter.post('/', usuarioController.create);
 
-usuarioRouter.patch("/:id", validateToken, usuarioController.update);
+usuarioRouter.patch('/:id', authUser, onOwnAccount, usuarioController.update);
 
-usuarioRouter.delete("/:id", validateToken, usuarioController.delete);
+usuarioRouter.delete('/:id', authUser, onOwnAccount, usuarioController.delete);
