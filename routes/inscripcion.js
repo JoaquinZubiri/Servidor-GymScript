@@ -19,6 +19,4 @@ inscripcionRouter.post("/", inscripcionController.create);
 
 inscripcionRouter.patch("/:id", inscripcionController.update);
 
-inscripcionRouter.patch("/unSubscribe/:id", inscripcionController.unSubscribe);
-
 inscripcionRouter.delete("/:id", inscripcionController.delete);
