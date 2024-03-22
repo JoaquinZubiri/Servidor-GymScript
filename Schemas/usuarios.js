@@ -1,4 +1,4 @@
-import z from "zod"; //libreria para validar el body de la req
+import z from 'zod'; //libreria para validar el body de la req
 
 const usuarioSchema = z.object({
   dni: z.number().int().positive().min(1).max(100000000),
@@ -7,7 +7,7 @@ const usuarioSchema = z.object({
   telefono: z.number().int().positive().optional(),
   mail: z.string().min(1),
   contraseña: z.string().min(1),
-  rol: z.enum(["admin", "user", "recepcionista"]),
+  rol: z.enum(['admin', 'user']),
 });
 
 export function validateUsuario(object) {
