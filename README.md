@@ -35,9 +35,12 @@ Es posible que los datos provenientes de la BD tarden en cargarse, esto se debe 
 
 Este proyecto se encuentra ejecutandose en: [**https://servidordsw.onrender.com**](https://servidordsw.onrender.com)
 
-### Pasos para Ejecutar Localmente
+## Comandos Útiles
 
 - Instalar Dependencias: npm install
 - Ejecutar Servidor
-  - En consola escribir: node app.js
+  - Segun entorno:
+    - Normal: npm run start
+    - Dev: npm run dev
   - El servidor se creara en: http://localhost:3000/
+- Testing: npm run test
