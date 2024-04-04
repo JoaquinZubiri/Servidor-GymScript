@@ -2,7 +2,7 @@
 
 ## Usuarios
 
-> [!INFO]
+> [!NOTE]
 > Parametros posibles a la hora de buscar: mail
 
 - Url Base: usuarios
