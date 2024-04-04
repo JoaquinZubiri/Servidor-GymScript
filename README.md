@@ -17,9 +17,7 @@ Trabajo Practico de Desarrollo de Software UTN FRRO
 
 ## [Descripción de Negocio](https://drive.google.com/file/d/1wwekkTi99xBK9NEA6BUtu4bnYpEpjds7/view?usp=sharing)
 
-## EndPoints del servidor
-
-https://docs.google.com/document/d/1EIHSZ4md7HtXjbQpvfdjq-4wYMR6JP4S_Y3CCAhQ2Oo/edit?usp=sharing
+## [Documentación Adicional](docs/README.md)
 
 ## Visualizacion del proyecto
 
