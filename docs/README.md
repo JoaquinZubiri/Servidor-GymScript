@@ -185,3 +185,14 @@
   - Pagar: cuota
 - Patch: cuotas/id
 - Delete: cuota/id
+
+## Check-In
+
+- Url Base: check-in
+- Get:
+  - All: check-in
+  - By id: check-in/id
+  - Access Control: check-in/accessControl/id
+- Post: check-in
+- Patch: check-in/id
+- Delete: check-in/id
