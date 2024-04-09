@@ -125,13 +125,18 @@ export class usuarioController {
       } else {
         const t = await db.transaction();
         try {
-          await inscripcionModel.update(
-            { idUsuario: null, fechaBaja: new Date() },
-            {
-              where: { idUsuario: req.params.id },
-            },
-            { transaction: t }
-          );
+          const inscripcion = await inscripcionModel.getOne({
+            idUsuario: req.params.id,
+          });
+          if (inscripcion) {
+            await inscripcionModel.update(
+              { idUsuario: null, fechaBaja: new Date() },
+              {
+                where: { idUsuario: req.params.id },
+              },
+              { transaction: t }
+            );
+          }
           await usuario.destroy({ transaction: t });
           await t.commit();
           res.json({ msg: "Usuario eliminado" }).status(200);
