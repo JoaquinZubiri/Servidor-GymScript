@@ -30,8 +30,8 @@
   - By cuota: inscripciones?cuota=true
 - Post: inscripciones
 - Patch: inscripciones/id
-  > [!IMPORTANT]
-  > Solo se puede modificar la fecha de baja. Cuando el usuario se cambia de plan, no se elimina la inscripción ni se modifica el plan de esta, sino que se crea una nueva una vez la antigua esté dada de baja.
+> [!IMPORTANT]
+> Solo se puede modificar la fecha de baja. Cuando el usuario se cambia de plan, no se elimina la inscripción ni se modifica el plan de esta, sino que se crea una nueva una vez la antigua esté dada de baja.
 - Delete: inscripciones/id
 
 ## Planes
@@ -86,8 +86,8 @@
   - Order by ascending: productos?ord=ASD
   - Order by descending: productos?ord=DESC
 - Post: productos
-  > [!IMPORTANT]
-  > La imagen no se envía como URL sino que se tiene que enviar la imagen. Además, no tiene formato JSON sino que form-data.
+> [!IMPORTANT]
+> La imagen no se envía como URL sino que se tiene que enviar la imagen. Además, no tiene formato JSON sino que form-data.
 - Patch: productos/id
 - Delete: productos/id
 
