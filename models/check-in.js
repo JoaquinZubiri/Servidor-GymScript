@@ -8,7 +8,7 @@ export const checkInModel = db.define(
   {
     idUsuario: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     idSede: {
       type: DataTypes.INTEGER,

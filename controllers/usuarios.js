@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 import { usuarioModel } from "../models/usuario.js";
 import { inscripcionModel } from "../models/inscripcion.js";
+import { checkInModel } from "../models/check-in.js";
 import {
   validateUsuario,
   validateParcialUsuario,
@@ -125,12 +126,26 @@ export class usuarioController {
       } else {
         const t = await db.transaction();
         try {
-          const inscripcion = await inscripcionModel.findOne({
-            idUsuario: req.params.id,
-          });
+          const inscripcion = await inscripcionModel.findOne(
+            { where: { idUsuario: req.params.id } },
+            { transaction: t }
+          );
           if (inscripcion) {
             await inscripcionModel.update(
               { idUsuario: null, fechaBaja: new Date() },
+              {
+                where: { idUsuario: req.params.id },
+              },
+              { transaction: t }
+            );
+          }
+          const checkIn = await checkInModel.findOne(
+            { where: { idUsuario: req.params.id } },
+            { transaction: t }
+          );
+          if (checkIn) {
+            await checkInModel.update(
+              { idUsuario: null },
               {
                 where: { idUsuario: req.params.id },
               },

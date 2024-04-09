@@ -167,9 +167,8 @@ export class checkInController {
               idUsuario: usuario.id,
               idSede: inscripcion.sede.id,
               fecha: new Date().toISOString().split("T")[0],
-              hora: new Date().toLocaleTimeString().slice(3),
+              hora: new Date().toLocaleTimeString().slice(0, -3),
             };
-            console.log(checkIn);
             await checkInModel.create(checkIn);
             res.status(201).json({
               estadoCuota: estado,
