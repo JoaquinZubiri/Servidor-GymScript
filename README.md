@@ -15,11 +15,9 @@ Trabajo Practico de Desarrollo de Software UTN FRRO
 - [**FrontEnd**](https://github.com/fraancosan/gymScriptFE)
 - [**BackEnd (Actual)**](https://github.com/JoaquinZubiri/ServidorDSW)
 
-## [Descripción de Negocio](https://docs.google.com/document/d/1It50uhM5KP0xtz7-1U0BHvZYmDdUesr554C8exSc3dE/edit)
+## [Descripción de Negocio](https://drive.google.com/file/d/1wwekkTi99xBK9NEA6BUtu4bnYpEpjds7/view?usp=sharing)
 
-## EndPoints del servidor
-
-https://docs.google.com/document/d/1EIHSZ4md7HtXjbQpvfdjq-4wYMR6JP4S_Y3CCAhQ2Oo/edit?usp=sharing
+## [Documentación Adicional](docs/README.md)
 
 ## Visualizacion del proyecto
 
@@ -35,9 +33,12 @@ Es posible que los datos provenientes de la BD tarden en cargarse, esto se debe 
 
 Este proyecto se encuentra ejecutandose en: [**https://servidordsw.onrender.com**](https://servidordsw.onrender.com)
 
-### Pasos para Ejecutar Localmente
+## Comandos Útiles
 
 - Instalar Dependencias: npm install
 - Ejecutar Servidor
-  - En consola escribir: node app.js
+  - Segun entorno:
+    - Normal: npm run start
+    - Dev: npm run dev
   - El servidor se creara en: http://localhost:3000/
+- Testing: npm run test
