@@ -20,7 +20,7 @@ export async function authAdmin(req, res, next) {
       }
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Error al validar el token' });
+    res.status(401).json({ msg: 'Error al validar el token' });
   }
 }
 
@@ -42,7 +42,7 @@ export async function authUser(req, res, next) {
       }
     }
   } catch (error) {
-    res.status(500).json({ msg: 'Error al validar el token' });
+    res.status(401).json({ msg: 'Error al validar el token' });
   }
 }
 
