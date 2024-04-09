@@ -125,7 +125,7 @@ export class usuarioController {
       } else {
         const t = await db.transaction();
         try {
-          const inscripcion = await inscripcionModel.getOne({
+          const inscripcion = await inscripcionModel.findOne({
             idUsuario: req.params.id,
           });
           if (inscripcion) {
