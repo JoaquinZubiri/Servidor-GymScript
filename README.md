@@ -23,7 +23,9 @@ Trabajo Practico de Desarrollo de Software UTN FRRO
 
 [**Pagina Web**](https://francosanchez.me/gymScriptFE/home)
 
-[**Video Demostracion**](https://youtu.be/uJMpIO53Nyk)
+[**Video Demostracion**](https://youtu.be/u8zHUxM0M9Q)
+
+[*(Viejo) Video Demostracion - Primera Version*](https://youtu.be/uJMpIO53Nyk)
 
 ### Nota
 
