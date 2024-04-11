@@ -1,34 +1,33 @@
-import db from "../db/connection.js";
-import { DataTypes } from "sequelize";
+import db from '../db/connection.js'
+import { DataTypes } from 'sequelize'
 // imports de relaciones
-import { provinciaModel } from "./provincia.js";
+import { provinciaModel } from './provincia.js'
 
 export const localidadModel = db.define(
-  "localidad",
+  'localidad',
   {
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     codPostal: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     idProvincia: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
-  { freezeTableName: true, timestamps: false },
-);
+  { freezeTableName: true, timestamps: false }
+)
 
-// Relaciones
 provinciaModel.hasMany(localidadModel, {
-  foreignKey: "idProvincia",
-  sourceKey: "id",
-});
+  foreignKey: 'idProvincia',
+  sourceKey: 'id'
+})
 localidadModel.belongsTo(provinciaModel, {
-  foreignKey: "idProvincia",
-  as: "provincia",
-});
+  foreignKey: 'idProvincia',
+  as: 'provincia'
+})

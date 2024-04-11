@@ -1,6 +1,5 @@
-import { Sequelize } from "sequelize";
-// import { configDotenv } from "dotenv";
-import "dotenv/config";
+import { Sequelize } from 'sequelize'
+import 'dotenv/config'
 
 const db = new Sequelize(
   process.env.SCHEMADB,
@@ -9,9 +8,9 @@ const db = new Sequelize(
   {
     host: process.env.HOSTDB,
     port: process.env.PORTDB,
-    dialect: "mysql",
-    logging: false,
+    dialect: 'mysql',
+    logging: false
   }
-);
+)
 
-export default db;
+export default db

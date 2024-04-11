@@ -1,17 +1,17 @@
-import db from "../db/connection.js";
-import { DataTypes } from "sequelize";
+import db from '../db/connection.js'
+import { DataTypes } from 'sequelize'
 
 export const actividadModel = db.define(
-  "actividad",
+  'actividad',
   {
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     descripcion: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
-  { freezeTableName: true, timestamps: false },
-);
+  { freezeTableName: true, timestamps: false }
+)

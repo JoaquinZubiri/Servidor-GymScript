@@ -1,38 +1,38 @@
-import db from "../db/connection.js";
-import { DataTypes } from "sequelize";
+import db from '../db/connection.js'
+import { DataTypes } from 'sequelize'
 
 export const usuarioModel = db.define(
-  "usuario",
+  'usuario',
   {
     dni: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     apellido: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     telefono: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: true
     },
     mail: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     contraseña: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     rol: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
-  { freezeTableName: true, timestamps: false },
-);
+  { freezeTableName: true, timestamps: false }
+)
