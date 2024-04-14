@@ -1,67 +1,66 @@
-import db from "../db/connection.js";
-import { DataTypes, QueryTypes } from "sequelize";
+import db from '../db/connection.js'
+import { DataTypes, QueryTypes } from 'sequelize'
 // imports de relaciones
-import { sedeActividadModel } from "./sede-actividad.js";
+import { sedeActividadModel } from './sede-actividad.js'
 
 export const horarioModel = db.define(
-  "horario",
+  'horario',
   {
     dia: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     horaDesde: {
       type: DataTypes.TIME,
-      allowNull: false,
+      allowNull: false
     },
     horaHasta: {
       type: DataTypes.TIME,
-      allowNull: false,
+      allowNull: false
     },
     idSedeAct: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
-  { freezeTableName: true, timestamps: false },
-);
+  { freezeTableName: true, timestamps: false }
+)
 
 export async function validateHorarioRepetido(result, horario) {
-  let idSedeAct = result.idSedeAct;
-  let dia = result.dia;
-  let hDesde = result.horaDesde;
-  let hHasta = result.horaHasta;
+  let idSedeAct = result.idSedeAct
+  let dia = result.dia
+  let hDesde = result.horaDesde
+  let hHasta = result.horaHasta
   if (horario) {
-    let replacements = [];
-    replacements.push(idSedeAct || horario.idSedeAct);
-    replacements.push(dia || horario.dia);
-    replacements.push(hHasta || horario.horaHasta);
-    replacements.push(hDesde || horario.horaDesde);
-    replacements.push(horario.id);
+    let replacements = []
+    replacements.push(idSedeAct || horario.idSedeAct)
+    replacements.push(dia || horario.dia)
+    replacements.push(hHasta || horario.horaHasta)
+    replacements.push(hDesde || horario.horaDesde)
+    replacements.push(horario.id)
     return await db.query(
-      "select * from horario where idSedeAct = ? and dia = ? and not(? < horaDesde or ? > horaHasta) and id != ?",
+      'select * from horario where idSedeAct = ? and dia = ? and not(? < horaDesde or ? > horaHasta) and id != ?',
       {
         replacements: replacements,
-        type: QueryTypes.SELECT,
-      },
-    );
+        type: QueryTypes.SELECT
+      }
+    )
   } else {
     return await db.query(
-      "select * from horario where idSedeAct = ? and dia = ? and not(? < horaDesde or ? > horaHasta)",
+      'select * from horario where idSedeAct = ? and dia = ? and not(? < horaDesde or ? > horaHasta)',
       {
         replacements: [idSedeAct, dia, hHasta, hDesde],
-        type: QueryTypes.SELECT,
-      },
-    );
+        type: QueryTypes.SELECT
+      }
+    )
   }
 }
 
-// Relaciones
 sedeActividadModel.hasMany(horarioModel, {
-  foreignKey: "idSedeAct",
-  sourceKey: "id",
-});
+  foreignKey: 'idSedeAct',
+  sourceKey: 'id'
+})
 horarioModel.belongsTo(sedeActividadModel, {
-  foreignKey: "idSedeAct",
-  as: "sedes_actividades",
-});
+  foreignKey: 'idSedeAct',
+  as: 'sedes_actividades'
+})

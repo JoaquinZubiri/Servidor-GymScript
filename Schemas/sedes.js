@@ -1,14 +1,14 @@
-import z from "zod";
+import z from 'zod'
 
 const sedesSchema = z.object({
   direccion: z.string().min(1),
-  idLocalidad: z.number(),
-});
+  idLocalidad: z.number()
+})
 
 export function validateSedes(object) {
-  return sedesSchema.safeParse(object);
+  return sedesSchema.safeParse(object)
 }
 
 export function validateParcialSedes(object) {
-  return sedesSchema.partial().safeParse(object);
+  return sedesSchema.partial().safeParse(object)
 }
